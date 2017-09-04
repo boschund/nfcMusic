@@ -64,11 +64,11 @@ public class WebApp extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(browser);
 
-        Button options = new Button("Opt");
-        options.setOnAction(e -> callURL("140")); // FIXME values from CARD
-
-        Button set = new Button("Set");
+        Button set = new Button("URL");
         set.setOnAction(e -> urlField.setVisible(!urlField.isVisible()));
+
+        Button options = new Button("Full Screen");
+        options.setOnAction(e -> primaryStage.setFullScreen(!primaryStage.isFullScreen()));
 
         HBox hbox = new HBox(set, options, loadProgress, urlField);
         borderPane.setBottom(hbox);
@@ -76,7 +76,6 @@ public class WebApp extends Application {
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         primaryStage.setTitle("SKY DZM");
-		primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
