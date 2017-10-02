@@ -17,12 +17,15 @@ import java.util.Optional;
 
 public class WebApp extends Application {
 
-    private static final String INDEX = "index.php";
+    private static final String PROTOCOL = "http://";
+    private static String URL = "localhost";
     private static final String PATH = "/sky/SKY_MANIFEST_GUI/";
-    private static String URL = "http://localhost";
+    private static final String INDEX = "index.php";
     private final ProgressBar loadProgress = new ProgressBar();
     private WebEngine webEngine;
     private boolean manifestPresent = false;
+    NdefUltralightTagScanner ndefUltralightTagScanner;
+    private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -31,11 +34,30 @@ public class WebApp extends Application {
     // Stage ist nur Final, weil ich es fuer das Btn-Event brauche!
     @Override
     public void start(final Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        try {
+            startGui();
+
+        } catch (Exception e){
+            stopGui();
+            startGui();
+        }
+    }
+
+    @Override
+    public void stop() throws Exception {
+        stopGui();
+        startGui();
+    }
+
+    private void startGui() {
         //Initialize Cards Scanner
-        new NdefUltralightTagScanner(this);
+
+        ndefUltralightTagScanner = new NdefUltralightTagScanner(this);
 
         //Initialize WebView
-        createGUI(primaryStage);
+        createGUI(this.primaryStage);
 
         //Properties Listener
         //If index.php again no more group Manifesting
@@ -46,6 +68,12 @@ public class WebApp extends Application {
                 }
             }
         });
+    }
+
+
+    private void stopGui() {
+        ndefUltralightTagScanner = null;
+        webEngine = null;
     }
 
     private void createGUI(Stage primaryStage) {
@@ -67,10 +95,13 @@ public class WebApp extends Application {
         Button set = new Button("URL");
         set.setOnAction(e -> urlField.setVisible(!urlField.isVisible()));
 
+        Button reload = new Button("Reload");
+        reload.setOnAction(e -> webEngine.load(getFullURL()));
+
         Button options = new Button("Full Screen");
         options.setOnAction(e -> primaryStage.setFullScreen(!primaryStage.isFullScreen()));
 
-        HBox hbox = new HBox(set, options, loadProgress, urlField);
+        HBox hbox = new HBox(set, reload, options, loadProgress,  urlField);
         borderPane.setBottom(hbox);
 
         Scene scene = new Scene(borderPane);
@@ -97,7 +128,7 @@ public class WebApp extends Application {
     }
 
     private String getFullURL() {
-        return URL + PATH;
+        return PROTOCOL + URL + PATH;
     }
 
     public void showError(Throwable throwable) {
