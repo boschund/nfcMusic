@@ -13,9 +13,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class WebApp extends Application {
+    private static final Logger log = LogManager.getLogger(WebApp.class.getName());
+
 
     private static final String PROTOCOL = "http://";
     private static String URL = "localhost";
@@ -38,8 +41,8 @@ public class WebApp extends Application {
 
         try {
             startGui();
-
         } catch (Exception e){
+            log.error("Error {}", e);
             stopGui();
             startGui();
         }
@@ -119,8 +122,10 @@ public class WebApp extends Application {
     public void callURL(String cardId) {
         Platform.runLater(() -> {
             if (manifestPresent) {
+                log.info("{} - add Person", cardId);
                 webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId));
             } else {
+                log.info("{} - manifest Person", cardId);
                 webEngine.load(String.format(getFullURL() + "manifest.php?id=%s", cardId));
                 manifestPresent = true;
             }

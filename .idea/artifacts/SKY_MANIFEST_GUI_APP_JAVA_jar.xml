@@ -7,6 +7,8 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-api/1.0.M8/nfctools-api-1.0.M8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-ndef/1.0.M8/nfctools-ndef-1.0.M8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-core/1.0.M8/nfctools-core-1.0.M8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-core/2.8.2/log4j-core-2.8.2.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
