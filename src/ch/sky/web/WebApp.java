@@ -29,6 +29,8 @@ public class WebApp extends Application {
     private boolean manifestPresent = false;
     NdefUltralightTagScanner ndefUltralightTagScanner;
     private Stage primaryStage;
+    RadioButton r1;
+    private boolean newPsAlreadyIn;
 
     public static void main(String[] args) {
         launch(args);
@@ -57,6 +59,7 @@ public class WebApp extends Application {
     private void startGui() {
         //Initialize Cards Scanner
 
+        newPsAlreadyIn = false;
         ndefUltralightTagScanner = new NdefUltralightTagScanner(this);
 
         //Initialize WebView
@@ -66,8 +69,13 @@ public class WebApp extends Application {
         //If index.php again no more group Manifesting
         webEngine.getLoadWorker().stateProperty().addListener((ChangeListener<State>) (ov, oldState, newState) -> {
             if (newState == State.SUCCEEDED) {
+                log.info("web loc {}",webEngine.getLocation());
+                log.info("web loc contains {}",webEngine.getLocation().contains(INDEX));
+
                 if (webEngine.getLocation().contains(INDEX)) {
+                    log.info("logout");
                     manifestPresent = false;
+                    newPsAlreadyIn = false;
                 }
             }
         });
@@ -95,6 +103,15 @@ public class WebApp extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(browser);
 
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+
+        r1 = new RadioButton("U");
+        r1.setToggleGroup(toggleGroup);
+        RadioButton r2 = new RadioButton("JS");
+        r2.setToggleGroup(toggleGroup);
+        toggleGroup.selectToggle(r1);
+
         Button set = new Button("URL");
         set.setOnAction(e -> urlField.setVisible(!urlField.isVisible()));
 
@@ -104,7 +121,7 @@ public class WebApp extends Application {
         Button options = new Button("Full Screen");
         options.setOnAction(e -> primaryStage.setFullScreen(!primaryStage.isFullScreen()));
 
-        HBox hbox = new HBox(set, reload, options, loadProgress,  urlField);
+        HBox hbox = new HBox(r1, r2, set, reload, options, loadProgress,  urlField);
         borderPane.setBottom(hbox);
 
         Scene scene = new Scene(borderPane);
@@ -123,7 +140,23 @@ public class WebApp extends Application {
         Platform.runLater(() -> {
             if (manifestPresent) {
                 log.info("{} - add Person", cardId);
-                webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId));
+                try {
+                    if(r1.isSelected()){
+                        String newUrl;
+                        if(!newPsAlreadyIn){
+                            newUrl = webEngine.getLocation() + "&ps=" + cardId;
+                            newPsAlreadyIn = true;
+                        } else{
+                            newUrl = webEngine.getLocation() + "," + cardId;
+                        }
+                        webEngine.load(newUrl);
+                    } else{
+                        Platform.runLater(() -> webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId)));
+//                    webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId));
+                    }
+                } catch (Exception e){
+                    log.error("Error: {}", e);
+                }
             } else {
                 log.info("{} - manifest Person", cardId);
                 webEngine.load(String.format(getFullURL() + "manifest.php?id=%s", cardId));
