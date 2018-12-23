@@ -2,7 +2,7 @@
   <artifact type="jar" name="SKY_MANIFEST_GUI_APP_JAVA:jar">
     <output-path>$PROJECT_DIR$/out/artifacts</output-path>
     <root id="archive" name="SKY_MANIFEST_GUI_APP_JAVA.jar">
-      <element id="module-output" name="SKY_MANIFEST_GUI_APP_JAVA" />
+      <element id="module-output" name="nfcMusic" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-api/1.0.M8/nfctools-api-1.0.M8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-ndef/1.0.M8/nfctools-ndef-1.0.M8.jar" path-in-jar="/" />

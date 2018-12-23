@@ -1,6 +1,6 @@
-package ch.sky.web.nfc;
+package ch.bod.nfcMusic.nfc;
 
-import ch.sky.web.WebApp;
+import ch.bod.nfcMusic.WebApp;
 import org.nfctools.ndef.NdefListener;
 import org.nfctools.ndef.NdefOperations;
 import org.nfctools.ndef.NdefOperationsListener;
@@ -20,13 +20,10 @@ public class NfcListener implements NdefListener, NdefOperationsListener, Sneple
     @Override
     public void onNdefMessages(Collection<Record> records) {
         for (Record record : records) {
-            String string = record.toString();
-            String[] split = string.split("Text: ");
-            String[] split2 = split[1].split(",");
-            String value = split2[0];
+            String song = record.toString();
 
-            //Here comes the value
-            webAppController.callURL(value);
+            //Here comes the song
+            webAppController.callSong(song);
         }
     }
 

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SKY_MANIFEST_GUI_APP_JAVA.iml" filepath="$PROJECT_DIR$/SKY_MANIFEST_GUI_APP_JAVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nfcMusic.iml" filepath="$PROJECT_DIR$/nfcMusic.iml" />
     </modules>
   </component>
 </project>

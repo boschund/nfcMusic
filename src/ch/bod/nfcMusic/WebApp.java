@@ -1,6 +1,6 @@
-package ch.sky.web;
+package ch.bod.nfcMusic;
 
-import ch.sky.web.nfc.NdefUltralightTagScanner;
+import ch.bod.nfcMusic.nfc.NdefUltralightTagScanner;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -20,17 +20,12 @@ public class WebApp extends Application {
     private static final Logger log = LogManager.getLogger(WebApp.class.getName());
 
 
-    private static final String PROTOCOL = "http://";
-    private static String URL = "localhost";
-    private static final String PATH = "/sky/SKY_MANIFEST_GUI/";
-    private static final String INDEX = "index.php";
     private final ProgressBar loadProgress = new ProgressBar();
     private WebEngine webEngine;
-    private boolean manifestPresent = false;
+    private boolean manifestPresent = true;
     NdefUltralightTagScanner ndefUltralightTagScanner;
     private Stage primaryStage;
     RadioButton r1;
-    private boolean newPsAlreadyIn;
 
     public static void main(String[] args) {
         launch(args);
@@ -58,8 +53,6 @@ public class WebApp extends Application {
 
     private void startGui() {
         //Initialize Cards Scanner
-
-        newPsAlreadyIn = false;
         ndefUltralightTagScanner = new NdefUltralightTagScanner(this);
 
         //Initialize WebView
@@ -70,17 +63,9 @@ public class WebApp extends Application {
         webEngine.getLoadWorker().stateProperty().addListener((ChangeListener<State>) (ov, oldState, newState) -> {
             if (newState == State.SUCCEEDED) {
                 log.info("web loc {}",webEngine.getLocation());
-                log.info("web loc contains {}",webEngine.getLocation().contains(INDEX));
-
-                if (webEngine.getLocation().contains(INDEX)) {
-                    log.info("logout");
-                    manifestPresent = false;
-                    newPsAlreadyIn = false;
-                }
             }
         });
     }
-
 
     private void stopGui() {
         ndefUltralightTagScanner = null;
@@ -90,25 +75,19 @@ public class WebApp extends Application {
     private void createGUI(Stage primaryStage) {
         final WebView browser = new WebView();
         webEngine = browser.getEngine();
-        webEngine.load(getFullURL());
         loadProgress.progressProperty().bind(webEngine.getLoadWorker().progressProperty());
 
         TextField urlField = new TextField();
-        urlField.setText(URL);
-        urlField.setVisible(false);
-        urlField.textProperty().addListener((observable, oldValue, newValue) -> {
-            URL = newValue;
-        });
+        urlField.setVisible(true);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(browser);
 
-
         ToggleGroup toggleGroup = new ToggleGroup();
 
-        r1 = new RadioButton("U");
+        r1 = new RadioButton("Lesen");
         r1.setToggleGroup(toggleGroup);
-        RadioButton r2 = new RadioButton("JS");
+        RadioButton r2 = new RadioButton("Schreiben");
         r2.setToggleGroup(toggleGroup);
         toggleGroup.selectToggle(r1);
 
@@ -116,7 +95,6 @@ public class WebApp extends Application {
         set.setOnAction(e -> urlField.setVisible(!urlField.isVisible()));
 
         Button reload = new Button("Reload");
-        reload.setOnAction(e -> webEngine.load(getFullURL()));
 
         Button options = new Button("Full Screen");
         options.setOnAction(e -> primaryStage.setFullScreen(!primaryStage.isFullScreen()));
@@ -126,7 +104,7 @@ public class WebApp extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("SKY DZM");
+        primaryStage.setTitle("NFCmUSIC");
         primaryStage.show();
     }
 
@@ -134,39 +112,28 @@ public class WebApp extends Application {
      * Calls URL with Card ID
      * Either new Manifesting or if already present then group Manifesting
      *
-     * @param cardId
+     * @param pathToSong
      */
-    public void callURL(String cardId) {
+    public void callSong(String pathToSong) {
         Platform.runLater(() -> {
             if (manifestPresent) {
-                log.info("{} - add Person", cardId);
+                log.info("{} - Pfad zum Song : ", pathToSong);
                 try {
                     if(r1.isSelected()){
-                        String newUrl;
-                        if(!newPsAlreadyIn){
-                            newUrl = webEngine.getLocation() + "&ps=" + cardId;
-                            newPsAlreadyIn = true;
-                        } else{
-                            newUrl = webEngine.getLocation() + "," + cardId;
-                        }
-                        webEngine.load(newUrl);
+                        webEngine.load(pathToSong);
                     } else{
-                        Platform.runLater(() -> webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId)));
-//                    webEngine.executeScript(String.format("javascript:addGroupMember(%s)", cardId));
+                        Platform.runLater(() -> webEngine.executeScript(String.format("javascript:addGroupMember(%s)", pathToSong)));
+//                    webEngine.executeScript(String.format("javascript:addGroupMember(%s)", pathToSong));
                     }
                 } catch (Exception e){
                     log.error("Error: {}", e);
                 }
             } else {
-                log.info("{} - manifest Person", cardId);
-                webEngine.load(String.format(getFullURL() + "manifest.php?id=%s", cardId));
+                log.info("{} - manifest Person", pathToSong);
+                webEngine.load(pathToSong);
                 manifestPresent = true;
             }
         });
-    }
-
-    private String getFullURL() {
-        return PROTOCOL + URL + PATH;
     }
 
     public void showError(Throwable throwable) {

@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SKY_MANIFEST_GUI_APP_JAVA" />
+        <module name="nfcMusic" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SKY_MANIFEST_GUI_APP_JAVA" target="1.8" />
+      <module name="nfcMusic" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

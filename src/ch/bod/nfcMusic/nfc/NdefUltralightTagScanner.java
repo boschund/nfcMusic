@@ -1,6 +1,6 @@
-package ch.sky.web.nfc;
+package ch.bod.nfcMusic.nfc;
 
-import ch.sky.web.WebApp;
+import ch.bod.nfcMusic.WebApp;
 import org.nfctools.NfcAdapter;
 import org.nfctools.api.TagScannerListener;
 import org.nfctools.mf.ul.Type2NfcTagListener;
@@ -8,8 +8,6 @@ import org.nfctools.scio.Terminal;
 import org.nfctools.scio.TerminalHandler;
 import org.nfctools.scio.TerminalMode;
 import org.nfctools.spi.acs.AcsTerminal;
-
-import javax.smartcardio.CardException;
 
 public class NdefUltralightTagScanner implements TagScannerListener {
 
