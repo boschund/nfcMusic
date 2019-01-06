@@ -1,7 +1,8 @@
-package ch.bod.nfcMusic;
+package ch.bod.nfcMusic.sound;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -10,7 +11,7 @@ public class Song {
     private String path = "";
     private String songName = "";
     private String interpret = "";
-    private Image image;
+    private BufferedImage image;
 
     private File song;
 
@@ -52,7 +53,7 @@ public class Song {
         return interpret;
     }
 
-    public Image getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 

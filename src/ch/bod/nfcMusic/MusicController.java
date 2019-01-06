@@ -1,8 +1,10 @@
 package ch.bod.nfcMusic;
 
 import ch.bod.nfcMusic.gui.FileChooser;
+import ch.bod.nfcMusic.gui.MusicGUI;
 import ch.bod.nfcMusic.nfc.NdefUltralightTagScanner;
 import ch.bod.nfcMusic.sound.Playlist;
+import ch.bod.nfcMusic.sound.Song;
 import ch.bod.nfcMusic.sound.ThreadedMp3Player;
 
 import java.awt.event.ActionEvent;
@@ -55,12 +57,12 @@ public class MusicController implements ActionListener
                 return;
             if (selected.isFile()) {
                 Song song = new Song(selected);
-                gui.setActualSong(song.getPath());
+                gui.setActualSong(song);
                 callNext(song);
             }
             if (selected.isDirectory())
             {
-                gui.setActualSong(selected.getPath());
+                gui.setOutput(selected.getPath());
             }
         }
         if(e.getActionCommand() == BUTTON_READ)
@@ -85,7 +87,7 @@ public class MusicController implements ActionListener
         try {
             actualSong = playlist.remove(0);
             gui.updatePlaylist(playlist);
-            gui.setActualSong("PLAYING : " + actualSong.getSongName());
+            gui.setActualSong(actualSong);
         }catch(ArrayIndexOutOfBoundsException fertig)
         {
             return null;
@@ -103,7 +105,7 @@ public class MusicController implements ActionListener
         info("reset playlist");
         playlist.removeAllElements();
         gui.updatePlaylist(playlist);
-        gui.setActualSong("PLAYING : " + actualSong.getSongName());
+        gui.setActualSong(actualSong);
         player.resetPlayer();
     }
 
@@ -140,7 +142,7 @@ public class MusicController implements ActionListener
 
     private void play()
     {
-        gui.setActualSong("PLAYING : " + actualSong.getSongName());
+        gui.setActualSong(actualSong);
         player.play();
     }
 

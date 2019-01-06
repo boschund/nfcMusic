@@ -16,14 +16,12 @@ public class ImagePanel extends JPanel {
     }
 
     public ImagePanel() throws IOException {
-        setImage("resources/metal.png");
-
+        setImage(ImageIO.read(new File("resources/metal.png")));
     }
 
-    public void setImage(String path) throws IOException
+    public void setImage(BufferedImage image)
     {
-        img = ImageIO.read(new File(path));
-        setVisible(true);
+            img = image;
     }
 
 }

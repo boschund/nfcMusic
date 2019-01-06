@@ -1,7 +1,7 @@
 package ch.bod.nfcMusic.nfc;
 
 import ch.bod.nfcMusic.MusicController;
-import ch.bod.nfcMusic.Song;
+import ch.bod.nfcMusic.sound.Song;
 import org.nfctools.ndef.NdefListener;
 import org.nfctools.ndef.NdefOperations;
 import org.nfctools.ndef.NdefOperationsListener;

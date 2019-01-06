@@ -1,27 +1,27 @@
-package ch.bod.nfcMusic;
+package ch.bod.nfcMusic.gui;
 
-import ch.bod.nfcMusic.gui.FooterPanel;
-import ch.bod.nfcMusic.gui.ImagePanel;
+import ch.bod.nfcMusic.MusicController;
+import ch.bod.nfcMusic.sound.Song;
 import ch.bod.nfcMusic.sound.Playlist;
-import javafx.application.Platform;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 
 public class MusicGUI extends JFrame
 {
     private JTextArea commingSoon;
-    private ImagePanel plaing;
+    private ImagePanel playing;
     private final JProgressBar loader = new JProgressBar();
     private MusicController controller;
     private FooterPanel footerPanel = new FooterPanel();
 
     private MusicController.MODE mode;
 
-    MusicGUI(MusicController controller, MusicController.MODE mode)
+    public MusicGUI(MusicController controller, MusicController.MODE mode)
     {
         this.controller = controller;
         this.mode = mode;
@@ -62,8 +62,8 @@ public class MusicGUI extends JFrame
         footerPanel.setVisible(true);
         try
         {
-            plaing = new ImagePanel();
-            add(plaing, BorderLayout.CENTER);
+            playing = new ImagePanel();
+            add(playing, BorderLayout.CENTER);
         } catch (IOException ò_ó) {
             controller.error(ò_ó);
         }
@@ -94,9 +94,16 @@ public class MusicGUI extends JFrame
         footerPanel.setWritable();
     }
 
-    public void setActualSong(String next)
+    public void setOutput(String next)
     {
         footerPanel.setSong(next);
+    }
+
+    public void setActualSong(Song next)
+    {
+        footerPanel.setSong("PLAYING ::: " + next.getSongName());
+        playing.setImage(next.getImage());
+        repaint();
     }
 
     public String getInput()

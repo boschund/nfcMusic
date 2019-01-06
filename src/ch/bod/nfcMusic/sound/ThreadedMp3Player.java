@@ -3,15 +3,12 @@ package ch.bod.nfcMusic.sound;
 import java.io.FileInputStream;
 
 import ch.bod.nfcMusic.MusicController;
-import ch.bod.nfcMusic.Song;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 import javazoom.jl.player.advanced.PlaybackEvent;
 import javazoom.jl.player.advanced.PlaybackListener;
-
-import static ch.bod.nfcMusic.MusicController.*;
 
 public class ThreadedMp3Player extends Thread {
 
