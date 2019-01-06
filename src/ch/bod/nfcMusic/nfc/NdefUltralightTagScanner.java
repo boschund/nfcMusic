@@ -1,6 +1,6 @@
 package ch.bod.nfcMusic.nfc;
 
-import ch.bod.nfcMusic.WebApp;
+import ch.bod.nfcMusic.MusicController;
 import org.nfctools.NfcAdapter;
 import org.nfctools.api.TagScannerListener;
 import org.nfctools.mf.ul.Type2NfcTagListener;
@@ -11,11 +11,11 @@ import org.nfctools.spi.acs.AcsTerminal;
 
 public class NdefUltralightTagScanner implements TagScannerListener {
 
-    private static WebApp webAppController;
+    private static MusicController controller;
 
-    public NdefUltralightTagScanner(WebApp webAppController) {
-        this.webAppController = webAppController;
-        NfcListener ndefListener = new NfcListener(webAppController);
+    public NdefUltralightTagScanner(MusicController controller) {
+        this.controller = controller;
+        NfcListener ndefListener = new NfcListener(controller);
         scanForTags(ndefListener);
     }
 
@@ -25,7 +25,7 @@ public class NdefUltralightTagScanner implements TagScannerListener {
             terminalHandler.addTerminal(new AcsTerminal());
             return terminalHandler.getAvailableTerminal(preferredTerminalName);
         } catch (RuntimeException e){
-            webAppController.showError(e);
+            controller.error(e);
             return null;
         }
     }
@@ -48,11 +48,11 @@ public class NdefUltralightTagScanner implements TagScannerListener {
 
     @Override
     public void onScanningFailed(Throwable throwable) {
-        webAppController.showError(throwable);
+        controller.error(throwable);
     }
 
     @Override
     public void onTagHandingFailed(Throwable throwable) {
-        webAppController.showError(throwable);
+        controller.error(throwable);
     }
 }

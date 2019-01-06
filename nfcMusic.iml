@@ -13,11 +13,10 @@
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-api:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-core:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-ndef:1.0.M8" level="project" />
-    <orderEntry type="library" name="Maven: org.nfctools:nfctools-api:1.0.M8" level="project" />
-    <orderEntry type="library" name="Maven: org.nfctools:nfctools-core:1.0.M8" level="project" />
-    <orderEntry type="library" name="Maven: org.nfctools:nfctools-ndef:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: javazoom:jlayer:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.media:jmf:2.1.1e" level="project" />
   </component>
 </module>
