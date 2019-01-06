@@ -14,7 +14,6 @@ import java.util.Collection;
 public class NfcListener implements NdefListener, NdefOperationsListener, Sneplet {
 
     private MusicController controller;
-
     public NfcListener(MusicController controller) {
         this.controller = controller;
     }
@@ -36,7 +35,7 @@ public class NfcListener implements NdefListener, NdefOperationsListener, Sneple
                         if (listOfFiles[i].getName().endsWith("mp3"))
                             controller.addToPlaylist(new Song(listOfFiles[i]));
                 }
-                controller.play();
+                controller.callNext();
             }
             else {
                 controller.info("Scanned File : " + path + " is not existent !");

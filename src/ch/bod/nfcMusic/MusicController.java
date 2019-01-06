@@ -23,7 +23,6 @@ public class MusicController implements ActionListener
     private volatile static ThreadedMp3Player player;
     private FileChooser fileChooser = new FileChooser();
     private MusicGUI gui;
-    private String next;
 
     private MODE mode = MODE.DEV;
 
@@ -44,16 +43,6 @@ public class MusicController implements ActionListener
         player.start();
         gui.start();
         callNext(new Song(new File(referencePath + "//resources//intro.mp3")));
-    }
-
-    public void songEnded()
-    {
-        info("END OF SONG !!!");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            error(e);
-        }
     }
 
     @Override
@@ -91,15 +80,12 @@ public class MusicController implements ActionListener
         return mode;
     }
 
-    public ThreadedMp3Player getPlayer()
-    {
-        return player;
-    }
-
     public Song getNext()
     {
         try {
             actualSong = playlist.remove(0);
+            gui.updatePlaylist(playlist);
+            gui.setActualSong("PLAYING : " + actualSong.getSongName());
         }catch(ArrayIndexOutOfBoundsException fertig)
         {
             return null;
@@ -117,6 +103,8 @@ public class MusicController implements ActionListener
         info("reset playlist");
         playlist.removeAllElements();
         gui.updatePlaylist(playlist);
+        gui.setActualSong("PLAYING : " + actualSong.getSongName());
+        player.resetPlayer();
     }
 
     /**
@@ -130,20 +118,29 @@ public class MusicController implements ActionListener
         gui.updatePlaylist(playlist);
     }
 
-    public void play()
-    {
-        player.play();
-    }
-
     /**
      * Calls next song with Card ID
      * @param song
      */
     public void callNext(Song song)
     {
-        info("Card detected with song : " + song.getPath());
-        playlist.add(song);
+        playlist.addElement(song);
         actualSong = song;
+        play();
+    }
+
+    /**
+     * Calls next songs with Card ID
+     */
+    public void callNext()
+    {
+        actualSong = playlist.elementAt(0);
+        play();
+    }
+
+    private void play()
+    {
+        gui.setActualSong("PLAYING : " + actualSong.getSongName());
         player.play();
     }
 

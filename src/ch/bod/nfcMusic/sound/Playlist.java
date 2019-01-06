@@ -16,13 +16,4 @@ public class Playlist extends Vector<Song> {
         this.name = name;
     }
 
-    public void addAtFirstplace(Song song)
-    {
-        for (int i = size(); i > 0 ; i--)
-        {
-            add(i, elementAt(i-1));
-        }
-        add(0, song);
-    }
-
 }

@@ -72,7 +72,6 @@ public class ThreadedMp3Player extends Thread {
 
                     if (played && !paused && !queued) {
                         controller.info("Song done, next...");
-                        controller.songEnded();
                         play();
                     }
                 }
