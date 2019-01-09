@@ -1,20 +1,19 @@
 package ch.bod.nfcMusic.gui;
 
 import ch.bod.nfcMusic.MusicController;
-import ch.bod.nfcMusic.sound.Song;
 import ch.bod.nfcMusic.sound.Playlist;
-
+import ch.bod.nfcMusic.sound.Song;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 
 public class MusicGUI extends JFrame
 {
-    private JTextArea commingSoon;
+    private SimpleTable commingSoon;
     private ImagePanel playing;
+    private PlayPanel playButton;
     private final JProgressBar loader = new JProgressBar();
     private MusicController controller;
     private FooterPanel footerPanel = new FooterPanel();
@@ -30,7 +29,7 @@ public class MusicGUI extends JFrame
     public void start() {
         try {
             // setting the frame
-            setSize(500, 350);
+            setSize(700, 400);
             setTitle("NFCMusic");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
@@ -48,7 +47,7 @@ public class MusicGUI extends JFrame
     private void createGUI() {
         setLayout(new BorderLayout());
 
-        // progressLoader
+        // progressLoader @ header
         loader.setValue(0);
         loader.setStringPainted(true);
         loader.setIndeterminate(true);
@@ -60,6 +59,8 @@ public class MusicGUI extends JFrame
         footerPanel.create(controller, mode);
         add(footerPanel, BorderLayout.PAGE_END);
         footerPanel.setVisible(true);
+
+        // show the album cover
         try
         {
             playing = new ImagePanel();
@@ -68,19 +69,28 @@ public class MusicGUI extends JFrame
             controller.error(ò_ó);
         }
 
-        commingSoon = new JTextArea("...", 5, 15);
-        commingSoon.setEditable(false);
+        // show the playlist as table
+        commingSoon = new SimpleTable();
         add(commingSoon, BorderLayout.LINE_START);
+
+        // play and pause button
+        try
+        {
+            playButton = new PlayPanel(controller);
+            add(playButton, BorderLayout.EAST);
+            pauseButton();
+        } catch (IOException ò_ó) {
+            controller.error(ò_ó);
+        }
 
         repaint();
         setVisible(true);
     }
 
     public void updatePlaylist(Playlist playlist) {
-        commingSoon.setText("");
-        for (Song song:playlist)
-        {
-            commingSoon.append(song.getSongName() + "\n");
+        commingSoon.setDataModel(new SimpleTableModel());
+        for (int i = 0; i < playlist.size(); i++) {
+            commingSoon.getDataModel().set(i, playlist.elementAt(i).getSongName());
         }
     }
 
@@ -97,6 +107,24 @@ public class MusicGUI extends JFrame
     public void setOutput(String next)
     {
         footerPanel.setSong(next);
+    }
+
+    public void playButton()
+    {
+        playButton.setPlay();
+        repaint();
+    }
+
+    public void ffButton()
+    {
+        playButton.setFf();
+        repaint();
+    }
+
+    public void pauseButton()
+    {
+        playButton.setPause();
+        repaint();
     }
 
     public void setActualSong(Song next)

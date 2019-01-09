@@ -7,11 +7,14 @@ import ch.bod.nfcMusic.sound.Playlist;
 import ch.bod.nfcMusic.sound.Song;
 import ch.bod.nfcMusic.sound.ThreadedMp3Player;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
-public class MusicController implements ActionListener
+public class MusicController implements ActionListener, MouseListener
 {
     public static final String SEARCH = "search";
     public static final String BUTTON_READ = "b_read";
@@ -30,6 +33,15 @@ public class MusicController implements ActionListener
 
     public static void main(String[] args)
     {
+        try {
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+            //*LookAndFeel
+        }
+        catch (Throwable e) {
+            System.out.println(e);
+        }
         new MusicController();
     }
 
@@ -117,6 +129,7 @@ public class MusicController implements ActionListener
     {
         info("Card detected with song : " + song.getPath());
         playlist.add(song);
+        updateButton();
         gui.updatePlaylist(playlist);
     }
 
@@ -140,10 +153,57 @@ public class MusicController implements ActionListener
         play();
     }
 
+    private void pause()
+    {
+        player.resetPlayer();
+    }
+
     private void play()
     {
         gui.setActualSong(actualSong);
         player.play();
+    }
+
+    private void updateButton()
+    {
+        if (playlist.size() < 1)
+            gui.playButton();
+        else
+            gui.ffButton();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (player.getState().toString().equalsIgnoreCase("TIMED_WAITING")) {
+            info("playing");
+            updateButton();
+            pause();
+        }
+        else {
+            info("paused");
+            gui.pauseButton();
+            callNext(actualSong);
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 
     public void error(Throwable ò_ó)

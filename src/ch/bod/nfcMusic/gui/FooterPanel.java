@@ -1,8 +1,6 @@
 package ch.bod.nfcMusic.gui;
 
 import ch.bod.nfcMusic.MusicController;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 
@@ -15,12 +13,10 @@ public class FooterPanel extends JPanel
     private JRadioButton r_read;
     private JRadioButton r_write;
 
-    private static final Logger log = LogManager.getLogger(FooterPanel.class.getName());
-
     public FooterPanel create(MusicController controller, MusicController.MODE mode) {
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
 
-        scan = new JTextField("C:\\java\\nfcMusic\\resources");
+        scan = new JTextField("WELCOME");
         add(scan);
         scan.setVisible(true);
 

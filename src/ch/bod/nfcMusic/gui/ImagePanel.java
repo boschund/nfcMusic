@@ -12,7 +12,7 @@ public class ImagePanel extends JPanel {
     BufferedImage img;
 
     public void paint(Graphics g) {
-        g.drawImage(img, 50, 10, 250, 250, null);
+        g.drawImage(img, 50, 50, 250, 250, null);
     }
 
     public ImagePanel() throws IOException {
@@ -21,7 +21,7 @@ public class ImagePanel extends JPanel {
 
     public void setImage(BufferedImage image)
     {
-            img = image;
+        img = image;
     }
 
 }
