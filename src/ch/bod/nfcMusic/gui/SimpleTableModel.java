@@ -4,7 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 class SimpleTableModel extends DefaultTableModel {
 
-    private int rows = 50;
+    private int rows = 500;
 
     public SimpleTableModel() {
         super();

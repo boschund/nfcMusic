@@ -4,8 +4,10 @@ import ch.bod.nfcMusic.MusicController;
 import ch.bod.nfcMusic.sound.Playlist;
 import ch.bod.nfcMusic.sound.Song;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -33,7 +35,7 @@ public class MusicGUI extends JFrame
             setTitle("NFCMusic");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
-            setIconImage(Toolkit.getDefaultToolkit().getImage("resources/metal.png"));
+            setIconImage(Toolkit.getDefaultToolkit().getImage(controller.getReferencePath() + File.separator + "resources" + File.separator + "metal.png"));
 
             //creating GUI
             createGUI();
@@ -63,7 +65,7 @@ public class MusicGUI extends JFrame
         // show the album cover
         try
         {
-            playing = new ImagePanel();
+            playing = new ImagePanel(controller);
             add(playing, BorderLayout.CENTER);
         } catch (IOException ò_ó) {
             controller.error(ò_ó);
@@ -111,19 +113,31 @@ public class MusicGUI extends JFrame
 
     public void playButton()
     {
-        playButton.setPlay();
+        try {
+            playButton.setButton(ImageIO.read(new File(controller.getReferencePath() + File.separator + "resources" + File.separator + "play.png")));
+        } catch (IOException e) {
+            controller.error(e);
+        }
         repaint();
     }
 
     public void ffButton()
     {
-        playButton.setFf();
+        try {
+            playButton.setButton(ImageIO.read(new File(controller.getReferencePath() + File.separator + "resources" + File.separator + "ff.png")));
+        } catch (IOException e) {
+            controller.error(e);
+        }
         repaint();
     }
 
     public void pauseButton()
     {
-        playButton.setPause();
+        try {
+            playButton.setButton(ImageIO.read(new File(controller.getReferencePath() + File.separator + "resources" + File.separator + "pause.png")));
+        } catch (IOException e) {
+            controller.error(e);
+        }
         repaint();
     }
 

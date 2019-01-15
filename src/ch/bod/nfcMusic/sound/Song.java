@@ -15,20 +15,24 @@ public class Song {
 
     private File song;
 
-    public Song(File file)
-    {
-            song = file;
-            songName = song.getName().substring(0, song.getName().lastIndexOf("."));
-            path = song.getPath();
-            String parent = song.getParent();
-            interpret = parent.substring(parent.lastIndexOf(File.separator) + 1, parent.length() - 1);
+    public Song(File file) {
+        song = file;
+        songName = song.getName().substring(0, song.getName().lastIndexOf("."));
+        path = song.getPath();
+        String parent = song.getParent();
+        interpret = parent.substring(parent.lastIndexOf(File.separator) + 1, parent.length() - 1);
             try {
                 image = ImageIO.read(new File(parent + File.separator + songName + ".png"));
             } catch (IOException e) {
                 try {
-                    image = ImageIO.read(new File("resources/metal.png"));
+                    String parentname = parent.substring(parent.lastIndexOf(File.separator)+1, parent.length());
+                    image = ImageIO.read(new File(parent + File.separator + parentname + ".png"));
                 } catch (IOException e1) {
-                    System.out.println("::: --- connot load image --- :::");
+                    try {
+                        image = ImageIO.read(new File("./resources/metal.png"));
+                    } catch (IOException e2) {
+                        System.out.println("::: --- connot load image --- :::");
+                    }
                 }
             }
     }

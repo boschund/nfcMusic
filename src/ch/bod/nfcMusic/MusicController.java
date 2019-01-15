@@ -28,6 +28,7 @@ public class MusicController implements ActionListener, MouseListener
     private volatile static ThreadedMp3Player player;
     private FileChooser fileChooser = new FileChooser();
     private MusicGUI gui;
+    private String referencePath;
 
     private MODE mode = MODE.DEV;
 
@@ -52,11 +53,15 @@ public class MusicController implements ActionListener, MouseListener
         ndefUltralightTagScanner = new NdefUltralightTagScanner(this);
         // intro
         File ref = new File("ref");
-        String referencePath = ref.getAbsolutePath().substring(0, ref.getAbsolutePath().length()-4);
+        referencePath = ref.getAbsolutePath().substring(0, ref.getAbsolutePath().length()-4);
         player = new ThreadedMp3Player(this);
         player.start();
         gui.start();
-        callNext(new Song(new File(referencePath + "//resources//intro.mp3")));
+        callNext(new Song(new File(referencePath + File.separator+ "resources" + File.separator + "intro.mp3")));
+    }
+
+    public java.lang.String getReferencePath() {
+        return referencePath;
     }
 
     @Override

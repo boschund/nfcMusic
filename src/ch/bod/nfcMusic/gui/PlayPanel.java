@@ -13,13 +13,14 @@ public class PlayPanel extends JPanel {
 
     BufferedImage img;
     MusicController controller;
+    public enum BUTTON {PLAY, PAUSE, FF};
 
     public void paint(Graphics g) {
         g.drawImage(img, 5, 100, 150, 150, null);
     }
 
     public PlayPanel(MusicController controller) throws IOException {
-        setvoid();
+        setButton(null);
         setPreferredSize(new Dimension(200, 400));
         controller = controller;
         addMouseListener(controller);
@@ -30,37 +31,9 @@ public class PlayPanel extends JPanel {
         img = image;
     }
 
-    public void setFf()
+    public void setButton(BufferedImage file)
     {
-        try {
-            setImage(ImageIO.read(new File("resources/ff.png")));
-        } catch (IOException e) {
-            controller.error(e);
-        }
+        setImage(file);
     }
-
-    public void setPause()
-    {
-        try {
-            setImage(ImageIO.read(new File("resources/pause.png")));
-        } catch (IOException e) {
-            controller.error(e);
-        }
-    }
-
-    public void setvoid()
-    {
-        img = null;
-    }
-
-    public void setPlay()
-    {
-        try {
-            setImage(ImageIO.read(new File("resources/play.png")));
-        } catch (IOException e) {
-            controller.error(e);
-        }
-    }
-
 
 }
