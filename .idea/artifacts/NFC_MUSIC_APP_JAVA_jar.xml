@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="NFC_MUSIC_APP_JAVA:jar">
+  <artifact type="jar" build-on-make="true" name="NFC_MUSIC_APP_JAVA:jar">
     <output-path>$PROJECT_DIR$/out/artifacts</output-path>
     <root id="archive" name="NFC_MUSIC_APP_JAVA.jar">
+      <element id="library" level="project" name="javazoom:jlayer:1.0.1" />
+      <element id="library" level="project" name="org.nfctools:nfctools-api:1.0.M8" />
+      <element id="library" level="project" name="org.nfctools:nfctools-core:1.0.M8" />
+      <element id="library" level="project" name="org.nfctools:nfctools-ndef:1.0.M8" />
+      <element id="library" level="project" name="org.slf4j:slf4j-api:1.7.25" />
       <element id="module-output" name="nfcMusic" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-api/1.0.M8/nfctools-api-1.0.M8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-ndef/1.0.M8/nfctools-ndef-1.0.M8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/nfctools/nfctools-core/1.0.M8/nfctools-core-1.0.M8.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-core/2.8.2/log4j-core-2.8.2.jar" path-in-jar="/" />
+      <element id="library" level="module" name="JTattoo-1.6.11" module-name="nfcMusic" />
     </root>
   </artifact>
 </component>
