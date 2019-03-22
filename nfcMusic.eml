@@ -9,9 +9,9 @@
 	</lib>
 	<levels>
 		<level name="javazoom:jlayer:1.0.1" value="project"/>
-		<level name="org.nfctools:nfctools-api:1.0.M8" value="project"/>
-		<level name="org.nfctools:nfctools-core:1.0.M8" value="project"/>
-		<level name="org.nfctools:nfctools-ndef:1.0.M8" value="project"/>
+		<level name="org.org.nfctools:org.nfctools-api:1.0.M8" value="project"/>
+		<level name="org.org.nfctools:org.nfctools-core:1.0.M8" value="project"/>
+		<level name="org.org.nfctools:org.nfctools-ndef:1.0.M8" value="project"/>
 		<level name="org.slf4j:slf4j-api:1.7.25" value="project"/>
 	</levels>
 </component>
