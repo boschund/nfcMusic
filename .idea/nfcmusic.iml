@@ -29,5 +29,8 @@
     <orderEntry type="library" name="Maven: org.rxtx:rxtx:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.14" level="project" />
+    <orderEntry type="library" name="org.controlsfx:controlsfx:9.0.0" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-simple:1.6.2" level="project" />
+    <orderEntry type="library" name="rxtx-2.1.7" level="project" />
   </component>
 </module>
