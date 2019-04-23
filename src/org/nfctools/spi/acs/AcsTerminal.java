@@ -30,8 +30,8 @@ import org.nfctools.scio.AbstractTerminal;
 import org.nfctools.scio.TerminalMode;
 import org.nfctools.scio.TerminalStatus;
 import org.nfctools.spi.tama.nfcip.TamaNfcIpCommunicator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardException;
@@ -40,7 +40,7 @@ import java.util.List;
 
 public class AcsTerminal extends AbstractTerminal {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private MfReaderWriter mfReaderWriter;
 	private Thread scanningThread;
 	private AbstractTerminalTagScanner tagScanner;
@@ -87,7 +87,7 @@ public class AcsTerminal extends AbstractTerminal {
 	public void initInitiatorDep() throws IOException {
 		mfReaderWriter = new Acr122ReaderWriter(this);
 		while (!Thread.interrupted()) {
-			log.info("Waiting...");
+			info("Waiting...");
 			notifyStatus(TerminalStatus.WAITING);
 			try {
 				if (cardTerminal.waitForCardPresent(500)) {
@@ -148,7 +148,7 @@ public class AcsTerminal extends AbstractTerminal {
 		nfcIpCommunicator.setGeneralBytes(LlcpConstants.initiatorGeneralBytes);
 		try {
 			NFCIPConnection nfcipConnection = nfcIpCommunicator.connectAsInitiator();
-			log.info("Connection: " + nfcipConnection);
+			info("Connection: " + nfcipConnection);
 			handleNfcipConnection(nfcipConnection);
 		}
 		finally {
@@ -171,7 +171,7 @@ public class AcsTerminal extends AbstractTerminal {
 				Card card = cardTerminal.connect("direct");
 				ApduReaderWriter apduReaderWriter = new ApduReaderWriter(card, false);
 				try {
-					log.info("Waiting...");
+					info("Waiting...");
 					connectAsTarget(apduReaderWriter);
 				}
 				catch (Exception e1) {
@@ -200,7 +200,7 @@ public class AcsTerminal extends AbstractTerminal {
 		nfcIpCommunicator.setMifareParams(LlcpConstants.mifareParams);
 		nfcIpCommunicator.setGeneralBytes(LlcpConstants.generalBytes);
 		NFCIPConnection nfcipConnection = nfcIpCommunicator.connectAsTarget();
-		log.info("Connection: " + nfcipConnection);
+		info("Connection: " + nfcipConnection);
 		handleNfcipConnection(nfcipConnection);
 	}
 }

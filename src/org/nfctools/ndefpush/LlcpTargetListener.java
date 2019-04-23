@@ -21,14 +21,14 @@ import org.nfctools.api.TargetListener;
 import org.nfctools.llcp.pdu.PduDecoder;
 import org.nfctools.spi.tama.nfcip.TamaNfcIpCommunicator;
 import org.nfctools.spi.tama.request.SetGeneralBytesReq;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class LlcpTargetListener implements TargetListener {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private byte[] llcHeader = { 0x46, 0x66, 0x6D };
 	private byte[] llcParameters = {};
 
@@ -39,7 +39,7 @@ public class LlcpTargetListener implements TargetListener {
 	@Override
 	public void onTarget(Target target, NfcContext nfcContext) throws IOException {
 
-		log.info("New target");
+		info("New target");
 		TamaNfcIpCommunicator nfcIpCommunicator = nfcContext.getAttribute(NfcContext.KEY_COMMUNICATOR);
 		//		nfcIpCommunicator.setTimeout(100); // default
 		//
@@ -58,7 +58,7 @@ public class LlcpTargetListener implements TargetListener {
 		System.arraycopy(llcHeader, 0, generalBytes, 0, llcHeader.length);
 		System.arraycopy(llcParameters, 0, generalBytes, llcHeader.length, llcParameters.length);
 
-		log.info("reply...");
+		info("reply...");
 		Integer statusCode = nfcIpCommunicator.sendMessage(new SetGeneralBytesReq(generalBytes));
 		if (statusCode.intValue() != 0)
 			throw new IOException("status code: " + statusCode);

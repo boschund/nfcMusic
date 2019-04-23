@@ -20,8 +20,8 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 import org.nfctools.io.NfcDevice;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -32,7 +32,7 @@ public class SerialPortNfcDevice implements NfcDevice {
 	private final static int TIMEOUT_FOR_OPEN = 1000;
 	private final static int SERIAL_PORT_BUFFER_SIZE = 1024;
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private SerialPort port = null;
 	private AbstractBaudRateNegotiator speedNegotiator;

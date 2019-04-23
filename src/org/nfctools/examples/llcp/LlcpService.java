@@ -34,8 +34,7 @@ import org.nfctools.spi.acs.AcsTerminal;
 import org.nfctools.spi.scm.SclTerminal;
 import org.nfctools.utils.LoggingNdefListener;
 import org.nfctools.utils.LoggingStatusListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +48,6 @@ import java.util.Collection;
  */
 public class LlcpService {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
 	private NdefListener ndefListener;
 	private NdefPushLlcpService ndefPushLlcpService;
 	private Terminal terminal;
@@ -63,7 +61,7 @@ public class LlcpService {
 		terminal = terminalHandler.getAvailableTerminal();
 		terminal.setStatusListener(statusListener);
 		terminal.setNdefListener(ndefListener);
-		log.info("Connected to " + terminal.getTerminalName());
+		info("Connected to " + terminal.getTerminalName());
 	}
 
 	public void addMessages(Collection<Record> ndefRecords, NdefPushFinishListener finishListener) {

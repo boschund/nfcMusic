@@ -23,8 +23,8 @@ import org.nfctools.scio.Command;
 import org.nfctools.scio.Response;
 import org.nfctools.spi.acs.Acs;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardException;
@@ -33,7 +33,7 @@ import javax.smartcardio.ResponseAPDU;
 
 public class AcsDirectChannelTag extends Tag implements ApduTag {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private Card card;
 
 	public AcsDirectChannelTag(TagType tagType, byte[] generalBytes, Card card) {

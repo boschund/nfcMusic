@@ -22,8 +22,8 @@ import org.nfctools.llcp.ServiceAccessPoint;
 import org.nfctools.ndef.NdefContext;
 import org.nfctools.ndef.NdefListener;
 import org.nfctools.ndef.Record;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class NdefPushLlcpService implements ServiceAccessPoint {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private ByteArrayOutputStream incommingBuffer = new ByteArrayOutputStream();
 	private NdefListener ndefListener;
@@ -56,7 +56,7 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 
 	@Override
 	public void onLlcpActive(Llcp llcp) {
-		log.debug(waitingMessages.size() + " NDEF messages to send");
+		debug(waitingMessages.size() + " NDEF messages to send");
 		if (hasMessagesToSend())
 			llcp.connectToService(LlcpConstants.COM_ANDROID_NPP, this);
 	}
@@ -71,7 +71,7 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 
 	@Override
 	public void onConnectFailed() {
-		log.debug("Connection failed");
+		debug("Connection failed");
 
 	}
 
@@ -87,7 +87,7 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 		}
 		outgoingMessage.compile();
 
-		log.debug("Connection ok, sending message with " + outgoingMessage.getAvailableBytes() + " bytes");
+		debug("Connection ok, sending message with " + outgoingMessage.getAvailableBytes() + " bytes");
 		sendMessage(llcpSocket);
 	}
 
@@ -112,7 +112,7 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 			else {
 				onConnectSucceeded(llcpSocket);
 			}
-			log.debug("Message send");
+			debug("Message send");
 			outgoingMessage.notifyFinishListenerSuccess();
 			outgoingMessage = null;
 		}
@@ -120,7 +120,7 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 
 	@Override
 	public void onSendFailed() {
-		log.debug("Send failed");
+		debug("Send failed");
 		if (outgoingMessage != null) {
 			outgoingMessage.notifyFinishListenerFailure();
 			outgoingMessage = null;
@@ -130,13 +130,13 @@ public class NdefPushLlcpService implements ServiceAccessPoint {
 	@Override
 	public boolean canAcceptConnection(Object[] parameters) {
 		boolean canAcceptConnection = ndefListener != null;
-		log.debug("can connect: " + canAcceptConnection);
+		debug("can connect: " + canAcceptConnection);
 		return canAcceptConnection;
 	}
 
 	@Override
 	public void onDisconnect() {
-		log.debug("Remote disconnect");
+		debug("Remote disconnect");
 		outgoingMessage = null;
 	}
 

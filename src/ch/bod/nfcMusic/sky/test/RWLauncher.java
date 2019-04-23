@@ -1,6 +1,6 @@
-package ch.sky.web.test;
+package ch.bod.nfcMusic.sky.test;
 
-import ch.sky.web.rfid.RfidListener;
+import ch.bod.nfcMusic.sky.rfid.RfidListener;
 
 public class RWLauncher {
 

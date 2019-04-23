@@ -18,14 +18,14 @@ package org.nfctools.examples.nfcip;
 
 import org.nfctools.nfcip.NFCIPConnection;
 import org.nfctools.nfcip.NFCIPManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.text.DecimalFormat;
 
 public class NfcInitiator implements Runnable {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private DecimalFormat df = new DecimalFormat("#.###");
 	private NFCIPManager nfcipManager;
 	private final int RUNS = 5;
@@ -39,10 +39,10 @@ public class NfcInitiator implements Runnable {
 		try {
 
 			while (true) {
-				log.info("Waiting for connection");
+				info("Waiting for connection");
 				NFCIPConnection nfcipConnection = nfcipManager.connectAsInitiator();
 
-				log.info("Connected, sending data...");
+				info("Connected, sending data...");
 
 				long time = System.currentTimeMillis();
 				int totalSend = 0;
@@ -56,9 +56,9 @@ public class NfcInitiator implements Runnable {
 					log.trace("Start of Run: " + runs);
 					nfcipConnection.send(data);
 					totalSend += data.length;
-					log.info("Send: " + data.length + " Runs: " + runs);
+					info("Send: " + data.length + " Runs: " + runs);
 					byte[] receive = nfcipConnection.receive();
-					log.info("Response: " + receive.length);
+					info("Response: " + receive.length);
 					log.trace("End of Run: " + runs);
 				}
 
@@ -66,10 +66,10 @@ public class NfcInitiator implements Runnable {
 				nfcipConnection.receive();
 
 				double timeNeeded = (double)(System.currentTimeMillis() - time) / 1000.0;
-				log.info("DONE in " + timeNeeded + "sec, " + df.format(((double)totalSend / 1024) / timeNeeded)
+				info("DONE in " + timeNeeded + "sec, " + df.format(((double)totalSend / 1024) / timeNeeded)
 						+ " kb/s");
 
-				log.info("Closing connection");
+				info("Closing connection");
 				nfcipConnection.close();
 			}
 		}

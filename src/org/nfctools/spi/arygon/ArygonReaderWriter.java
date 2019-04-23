@@ -22,14 +22,14 @@ import org.nfctools.mf.block.MfBlock;
 import org.nfctools.mf.block.TrailerBlock;
 import org.nfctools.mf.card.MfCard;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class ArygonReaderWriter implements MfReaderWriter {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private ArygonHighLevelReaderWriter nfcReaderWriter;
 	private Thread pollingThread = null;

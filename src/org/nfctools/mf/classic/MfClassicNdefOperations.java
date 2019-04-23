@@ -29,8 +29,8 @@ import org.nfctools.mf.tlv.TypeLengthValueWriter;
 import org.nfctools.ndef.Record;
 import org.nfctools.tags.TagOutputStream;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MfClassicNdefOperations extends AbstractNdefOperations {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private MfClassicReaderWriter readerWriter;
 	private byte[] writeKey = MfConstants.NDEF_KEY;
 
@@ -65,8 +65,7 @@ public class MfClassicNdefOperations extends AbstractNdefOperations {
 				Application application = getApplication();
 				// TODO create TagInputStream for better performance
 				byte[] tlvWrappedNdefMessage = application.read(new KeyValue(Key.A, MfConstants.NDEF_KEY));
-				if (log.isDebugEnabled())
-					log.debug(NfcUtils.convertBinToASCII(tlvWrappedNdefMessage));
+				debug(NfcUtils.convertBinToASCII(tlvWrappedNdefMessage));
 				TypeLengthValueReader reader = new TypeLengthValueReader(
 						new ByteArrayInputStream(tlvWrappedNdefMessage));
 				convertRecords(reader);

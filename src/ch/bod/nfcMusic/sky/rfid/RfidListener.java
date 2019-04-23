@@ -1,8 +1,7 @@
-package ch.sky.web.rfid;
+package ch.bod.nfcMusic.sky.rfid;
 
-import ch.sky.web.test.RWLauncher;
+import ch.bod.nfcMusic.sky.test.RWLauncher;
 import org.nfctools.NfcAdapter;
-import org.nfctools.api.NfcTagListener;
 import org.nfctools.api.TagScannerListener;
 import org.nfctools.examples.TerminalUtils;
 import org.nfctools.mf.MfAccess;
@@ -14,7 +13,6 @@ import org.nfctools.mf.block.MfBlock;
 import org.nfctools.mf.card.MfCard;
 import org.nfctools.mf.classic.Key;
 import org.nfctools.mf.classic.MemoryLayout;
-import org.nfctools.mf.classic.MfClassicReaderWriter;
 import org.nfctools.mf.tools.MfClassicCardCleaner;
 import org.nfctools.scio.TerminalMode;
 import org.nfctools.utils.LoggingUnknownTagListener;
@@ -22,7 +20,7 @@ import org.nfctools.utils.LoggingUnknownTagListener;
 import javax.smartcardio.CardException;
 import java.io.IOException;
 
-import static ch.sky.web.rfid.HexUtils.*;
+import static ch.bod.nfcMusic.sky.rfid.HexUtils.*;
 
 public class RfidListener implements TagScannerListener {
 

@@ -19,8 +19,8 @@ import org.nfctools.nfcip.NFCIPCommunicator;
 import org.nfctools.spi.tama.request.DataExchangeReq;
 import org.nfctools.spi.tama.request.ReleaseReq;
 import org.nfctools.spi.tama.response.DataExchangeResp;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class InitiatorNfcIpConnection extends AbstractNfcIpConnection {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private NFCIPCommunicator tamaCommunicator;
 	private int targetId;
@@ -81,7 +81,7 @@ public class InitiatorNfcIpConnection extends AbstractNfcIpConnection {
 			if (dataRead < 0) // if data was empty send 0 bytes
 				dataRead = 0;
 
-			log.debug("Sending data... " + dataRead + " MI: " + moreInformationToSend);
+			debug("Sending data... " + dataRead + " MI: " + moreInformationToSend);
 			DataExchangeResp dataExchangeResponse = tamaCommunicator.sendMessage(new DataExchangeReq(targetId,
 					moreInformationToSend, buffer, 0, dataRead));
 			if (dataExchangeResponse.getDataOut().length > 0)

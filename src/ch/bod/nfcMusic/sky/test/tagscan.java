@@ -1,4 +1,4 @@
-package ch.sky.web.test;
+package ch.bod.nfcMusic.sky.test;
 
 import javax.smartcardio.*;
 import java.math.BigInteger;

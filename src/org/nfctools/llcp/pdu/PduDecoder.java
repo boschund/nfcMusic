@@ -16,8 +16,8 @@
 package org.nfctools.llcp.pdu;
 
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class PduDecoder {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	public AbstractProtocolDataUnit decode(byte[] pduData) {
 

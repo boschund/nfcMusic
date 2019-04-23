@@ -18,8 +18,8 @@ package org.nfctools.spi.tama;
 import org.nfctools.NfcTimeoutException;
 import org.nfctools.io.ByteArrayReader;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ import java.io.IOException;
  */
 public class TamaReader implements ByteArrayReader {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 	private final ByteArrayReader reader;
 
 	private byte[] buffer = new byte[1024];

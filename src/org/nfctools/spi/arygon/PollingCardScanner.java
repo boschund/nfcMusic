@@ -18,14 +18,14 @@ package org.nfctools.spi.arygon;
 import org.nfctools.mf.MfCardListener;
 import org.nfctools.mf.MfReaderWriter;
 import org.nfctools.mf.card.MfCard;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class PollingCardScanner implements Runnable {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private ArygonHighLevelReaderWriter nfcReaderWriter;
 	private MfCardListener cardListener;

@@ -22,14 +22,14 @@ import org.nfctools.api.TagType;
 import org.nfctools.llcp.LlcpConstants;
 import org.nfctools.spi.acs.ApduTagReaderWriter;
 import org.nfctools.spi.tama.nfcip.TamaNfcIpCommunicator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class NFCIPTagListener implements NfcTagListener {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private NFCIPConnectionListener nfcipConnectionListener;
 
 	public NFCIPTagListener(NFCIPConnectionListener nfcipConnectionListener) {
@@ -49,7 +49,7 @@ public class NFCIPTagListener implements NfcTagListener {
 		nfcIpCommunicator.setConnectionSetup(LlcpConstants.CONNECTION_SETUP);
 		try {
 			NFCIPConnection nfcipConnection = nfcIpCommunicator.connectAsInitiator();
-			log.info("Connection: " + nfcipConnection);
+			info("Connection: " + nfcipConnection);
 			handleNfcipConnection(nfcipConnection);
 		}
 		catch (IOException e) {

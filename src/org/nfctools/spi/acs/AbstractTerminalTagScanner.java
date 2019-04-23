@@ -20,8 +20,8 @@ import org.nfctools.nfcip.NFCIPConnection;
 import org.nfctools.nfcip.NFCIPConnectionListener;
 import org.nfctools.scio.TerminalStatus;
 import org.nfctools.scio.TerminalStatusListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public abstract class AbstractTerminalTagScanner implements Runnable {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 	protected CardTerminal cardTerminal;
 	protected TerminalStatusListener statusListener;
 	protected TagListener tagListener;
@@ -48,20 +48,20 @@ public abstract class AbstractTerminalTagScanner implements Runnable {
 		try {
 			while (cardTerminal.isCardPresent()) {
 				try {
-					log.debug("Waiting while card present");
+					debug("Waiting while card present");
 					Thread.sleep(500);
 				}
 				catch (InterruptedException e) {
 					break;
 				}
 			}
-			log.debug("Wait for card absent");
+			debug("Wait for card absent");
 			cardTerminal.waitForCardAbsent(1000);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		log.debug("Disconnected");
+		debug("Disconnected");
 		notifyStatus(TerminalStatus.DISCONNECTED);
 	}
 

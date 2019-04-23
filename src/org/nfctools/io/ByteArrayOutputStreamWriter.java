@@ -16,8 +16,8 @@
 package org.nfctools.io;
 
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,7 +28,7 @@ import java.io.OutputStream;
  */
 public class ByteArrayOutputStreamWriter implements ByteArrayWriter {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private OutputStream outputStream;
 

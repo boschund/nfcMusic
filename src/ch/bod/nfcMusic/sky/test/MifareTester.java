@@ -1,4 +1,4 @@
-package ch.sky.web.test;
+package ch.bod.nfcMusic.sky.test;
 
 public class MifareTester{
 
@@ -8,8 +8,8 @@ public class MifareTester{
     public static void main(String[] args) {
         MifareTester tester = new MifareTester();
 //        tester.write();
-        tester.read();
-//        tester.cleanCard();
+//        tester.read();
+        tester.cleanCard();
     }
 
     private void read() {

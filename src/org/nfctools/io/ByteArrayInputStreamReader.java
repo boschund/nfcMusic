@@ -16,8 +16,8 @@
 package org.nfctools.io;
 
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +28,7 @@ import java.io.InputStream;
  */
 public class ByteArrayInputStreamReader implements ByteArrayReader {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private InputStream inputStream;
 
 	public ByteArrayInputStreamReader(InputStream inputStream) {
@@ -43,8 +43,8 @@ public class ByteArrayInputStreamReader implements ByteArrayReader {
 	public int read(byte[] data, int offset, int length) throws IOException {
 		int dataRead = inputStream.read(data, offset, length);
 
-		if (log.isDebugEnabled() && dataRead > 0)
-			log.debug("[" + NfcUtils.convertBinToASCII(data, offset, dataRead) + "]");
+		if ( dataRead > 0)
+			debug("[" + NfcUtils.convertBinToASCII(data, offset, dataRead) + "]");
 
 		return dataRead;
 	}

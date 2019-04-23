@@ -17,8 +17,7 @@ package org.nfctools.com;
 
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +27,6 @@ public abstract class AbstractBaudRateNegotiator {
 
 	protected final static int TIMEOUT = 1000;
 	protected final static int BUFFER_SIZE = 1024;
-
-	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	protected SerialPort port = null;
 	protected InputStream in = null;
@@ -58,7 +55,7 @@ public abstract class AbstractBaudRateNegotiator {
 			}
 		}
 		String resp = new String(buffer, 0, pos);
-		log.debug("bytes received: " + pos + " => " + resp);
+		debug("bytes received: " + pos + " => " + resp);
 		return resp;
 	}
 
@@ -78,23 +75,23 @@ public abstract class AbstractBaudRateNegotiator {
 		}
 		catch (IOException e) {
 		}
-		log.debug(bytesCleared + " bytes cleared");
+		debug(bytesCleared + " bytes cleared");
 	}
 
 	protected void findoutCurrentBaudRate() throws IOException {
 		if (checkPortBaudRate()) {
-			log.trace("Current baud rate was default");
+			debug("Current baud rate was default");
 			return;
 		}
 		else {
 
 			for (int baudRate : knownBaudRates) {
 				clearInputBuffers();
-				log.debug("Probing baud rate " + baudRate);
+				debug("Probing baud rate " + baudRate);
 				setSerialPortParams(baudRate);
 
 				if (checkPortBaudRate()) {
-					log.trace("Current baud rate was " + baudRate);
+					debug("Current baud rate was " + baudRate);
 					return;
 				}
 			}
@@ -103,12 +100,12 @@ public abstract class AbstractBaudRateNegotiator {
 	}
 
 	protected void sendASCIIMessage(String s) throws IOException {
-		log.debug(s);
+		debug(s);
 		out.write(s.getBytes());
 	}
 
 	protected void setSerialPortParams(int baudRate) {
-		log.debug("Setting com port baud rate to " + baudRate);
+		debug("Setting com port baud rate to " + baudRate);
 		try {
 			port.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			try {

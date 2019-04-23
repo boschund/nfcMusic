@@ -41,7 +41,7 @@ public class MfClassicCardScanner extends AbstractCardTool {
 					break;
 				}
 				catch (MfLoginException e) {
-					log.info("Cannot read sector: " + sectorId + " with key " + NfcUtils.convertBinToASCII(key));
+					info("Cannot read sector: " + sectorId + " with key " + NfcUtils.convertBinToASCII(key));
 				}
 			}
 		}

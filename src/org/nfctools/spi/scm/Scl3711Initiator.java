@@ -18,14 +18,14 @@ package org.nfctools.spi.scm;
 import org.nfctools.api.Target;
 import org.nfctools.nfcip.NFCIPConnection;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class Scl3711Initiator implements NFCIPConnection {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private Scl3711 scl3711;
 	private Target target;

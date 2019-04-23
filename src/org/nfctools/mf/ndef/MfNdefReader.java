@@ -28,8 +28,8 @@ import org.nfctools.mf.tlv.Tlv;
 import org.nfctools.mf.tlv.TypeLengthValueReader;
 import org.nfctools.ndef.*;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import java.util.List;
 @Deprecated
 public class MfNdefReader implements NdefReader<MfCard> {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private MfReaderWriter readerWriter;
 	private NdefMessageDecoder ndefMessageDecoder;
@@ -63,8 +63,7 @@ public class MfNdefReader implements NdefReader<MfCard> {
 
 			byte[] tlvWrappedNdefMessage = application.read(new KeyValue(Key.A, MfConstants.NDEF_KEY));
 
-			if (log.isDebugEnabled())
-				log.debug(NfcUtils.convertBinToASCII(tlvWrappedNdefMessage));
+			debug(NfcUtils.convertBinToASCII(tlvWrappedNdefMessage));
 
 			TypeLengthValueReader lengthValueReader = new TypeLengthValueReader(new ByteArrayInputStream(
 					tlvWrappedNdefMessage));

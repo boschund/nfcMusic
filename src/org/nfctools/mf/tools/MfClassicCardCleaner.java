@@ -56,25 +56,25 @@ public class MfClassicCardCleaner extends AbstractCardTool {
 						initTransportConfig(readerWriter, sectorId, new KeyValue(keyToWrite, key));
 						for (int blockId = 0; blockId < memoryLayout.getBlocksPerSector(sectorId); blockId++) {
 							if (!memoryLayout.isTrailerBlock(sectorId, blockId) && !(blockId == 0 && sectorId == 0)) {
-								log.info("Cleaning S" + sectorId + "|B" + blockId);
+								info("Cleaning S" + sectorId + "|B" + blockId);
 								MfClassicAccess access = new MfClassicAccess(new KeyValue(Key.A,
 										MfConstants.TRANSPORT_KEY), sectorId, blockId);
 								readerWriter.writeBlock(access, emptyDataBlock);
 							}
 						}
-						log.info("Sector " + sectorId + " clear with key: " + NfcUtils.convertBinToASCII(key));
+						info("Sector " + sectorId + " clear with key: " + NfcUtils.convertBinToASCII(key));
 						break;
 					}
 					catch (MfLoginException e) {
-						log.info("Cannot clear sector: " + sectorId + " with key " + NfcUtils.convertBinToASCII(key));
+						info("Cannot clear sector: " + sectorId + " with key " + NfcUtils.convertBinToASCII(key));
 					}
 				}
 			}
 			else {
-				log.info("Cannot read trailer block in sector: " + sectorId);
+				info("Cannot read trailer block in sector: " + sectorId);
 			}
 		}
-		log.info("Done!");
+		info("Done!");
 	}
 
 	public static void initTransportConfig(MfClassicReaderWriter readerWriter, int sector, KeyValue keyValue)

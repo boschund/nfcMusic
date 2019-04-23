@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package ch.sky.web.rfid;
+package ch.bod.nfcMusic.sky.rfid;
 
 import java.math.BigInteger;
 import java.util.regex.Pattern;

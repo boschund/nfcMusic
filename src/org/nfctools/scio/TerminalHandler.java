@@ -41,7 +41,7 @@ public class TerminalHandler {
 			TerminalFactory terminalFactory = TerminalFactory.getDefault();
 			List<CardTerminal> terminals = terminalFactory.terminals().list();
 			for (CardTerminal terminal : terminals) {
-				log.info("Checking terminal: " + terminal.getName());
+				info("Checking terminal: " + terminal.getName());
 				if (preferredTerminalName == null || preferredTerminalName.equals(terminal.getName())) {
 					for (Terminal knownTerminal : knownTerminals) {
 						if (knownTerminal.canHandle(terminal.getName())) {

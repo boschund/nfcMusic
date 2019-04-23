@@ -26,8 +26,7 @@ import org.nfctools.ndef.NdefContext;
 import org.nfctools.ndef.NdefMessageDecoder;
 import org.nfctools.ndef.Record;
 import org.nfctools.spi.acs.Acr122ReaderWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,8 +36,6 @@ import java.util.List;
  * 
  */
 public class NdefReaderDemo implements MfCardListener {
-
-	private static Logger log = LoggerFactory.getLogger(NdefReaderDemo.class.getName());
 
 	private NfcDevice nfcReaderWriter = TerminalUtils.getAvailableTerminal();
 	private MfReaderWriter readerWriter = new Acr122ReaderWriter(nfcReaderWriter);
@@ -51,7 +48,7 @@ public class NdefReaderDemo implements MfCardListener {
 		try {
 			List<Record> records = ndefReader.readNdefMessage(card);
 			for (Record record : records) {
-				log.info(record.toString());
+				info(record.toString());
 			}
 		}
 		catch (IOException e) {
@@ -63,9 +60,9 @@ public class NdefReaderDemo implements MfCardListener {
 
 		try {
 			nfcReaderWriter.open();
-			log.info("Listening...");
+			info("Listening...");
 			readerWriter.setCardListener(this);
-			log.info("Done");
+			info("Done");
 			System.in.read();
 			nfcReaderWriter.close();
 		}

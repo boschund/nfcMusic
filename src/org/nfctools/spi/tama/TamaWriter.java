@@ -17,8 +17,8 @@ package org.nfctools.spi.tama;
 
 import org.nfctools.io.ByteArrayWriter;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 public class TamaWriter implements ByteArrayWriter {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 	private ByteArrayWriter writer;
 
 	public TamaWriter(ByteArrayWriter writer) {

@@ -15,8 +15,8 @@
  */
 package org.nfctools.llcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import org.nfctools.llcp.parameter.LinkTimeOut;
 import org.nfctools.llcp.parameter.Miux;
@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 
 public class LlcpConnectionManager implements Llcp {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private final int SERVICE_DISCOVERY_ADDRESS = 1;
 	private final int PREFERRED_MIUX = 120;
 	private final int MAX_CONNECT_WAIT = 200;
@@ -81,7 +81,7 @@ public class LlcpConnectionManager implements Llcp {
 				pendingConnection.getServiceAccessPoint().onDisconnect();
 			}
 			catch (Exception e) {
-				log.warn("Error closing pending connection", e);
+				warning(e);
 			}
 		}
 		for (LlcpSocket llcpSocket : openConnections.values()) {
@@ -89,7 +89,7 @@ public class LlcpConnectionManager implements Llcp {
 				llcpSocket.disconnect();
 			}
 			catch (Exception e) {
-				log.warn("Error closing open connection", e);
+				warning(e);
 			}
 		}
 		pendingConnections.clear();
@@ -140,8 +140,7 @@ public class LlcpConnectionManager implements Llcp {
 				}
 				else {
 					pc.incRetries();
-					if (log.isDebugEnabled())
-						log.debug("Retrying connect " + pc.getRetries() + " - Waiting time: " + waitingTime);
+						debug("Retrying connect " + pc.getRetries() + " - Waiting time: " + waitingTime);
 					messageToSend = pc.getConnectPdu();
 					return;
 				}
@@ -150,7 +149,7 @@ public class LlcpConnectionManager implements Llcp {
 	}
 
 	public AbstractProtocolDataUnit onConnectComplete(int remoteAddress, int localAddress, Object[] parameters) {
-		log.info("connect complete, remote: " + remoteAddress + " lA: " + localAddress);
+		info("connect complete, remote: " + remoteAddress + " lA: " + localAddress);
 		Integer pendingLocalAddress = Integer.valueOf(localAddress);
 		if (pendingConnections.containsKey(pendingLocalAddress)) {
 			PendingConnection pendingConnection = pendingConnections.remove(pendingLocalAddress);
@@ -199,7 +198,7 @@ public class LlcpConnectionManager implements Llcp {
 				return llcpSocket;
 			}
 		}
-		log.info("Socket not found for rA: " + addressPair.getRemote() + " lA: " + addressPair.getRemote());
+		info("Socket not found for rA: " + addressPair.getRemote() + " lA: " + addressPair.getRemote());
 		return null;
 	}
 
@@ -244,7 +243,7 @@ public class LlcpConnectionManager implements Llcp {
 		for (Object param : parameters) {
 			if (param instanceof Version) {
 				Version version = (Version)param;
-				log.info("LLCP Version: " + version.getMajor() + "." + version.getMinor());
+				info("LLCP Version: " + version.getMajor() + "." + version.getMinor());
 				if (version.getMajor() != VERSION_MAJOR) {
 					throw new RuntimeException("Cannot handle Version " + version.getMajor());
 				}
@@ -255,22 +254,22 @@ public class LlcpConnectionManager implements Llcp {
 			else if (param instanceof Miux) {
 				Miux miux = (Miux)param;
 				miuExtension = Math.min(PREFERRED_MIUX, miux.getValue());
-				log.info("LLCP Miux: " + miux.getValue() + ", agreed on " + miuExtension);
+				info("LLCP Miux: " + miux.getValue() + ", agreed on " + miuExtension);
 			}
 			else if (param instanceof LinkTimeOut) {
 				LinkTimeOut lto = (LinkTimeOut)param;
 				linkTimeOut = lto.getValue() * 10;
-				log.info("LLCP Link Timeout: " + linkTimeOut + " ms");
+				info("LLCP Link Timeout: " + linkTimeOut + " ms");
 			}
 		}
-		log.info("All params parsed: " + parameters.length);
+		info("All params parsed: " + parameters.length);
 	}
 
 	private void oldAndroidQuirck() {
 		try {
-			log.info("Waiting...");
+			info("Waiting...");
 			Thread.sleep(100);
-			log.info("Done waiting.");
+			info("Done waiting.");
 		}
 		catch (InterruptedException e) {
 		}
@@ -304,7 +303,7 @@ public class LlcpConnectionManager implements Llcp {
 			case 0x00: // disc OK
 				llcpSocket = getOpenLlcpSocket(new AddressPair(remoteAddress, localAddress));
 				if (llcpSocket != null) {
-					log.info("Closing open connection");
+					info("Closing open connection");
 					closeSocket(llcpSocket);
 					llcpSocket.onDisconnectSucceeded();
 					return handleMessageToSend(llcpSocket);
@@ -312,7 +311,7 @@ public class LlcpConnectionManager implements Llcp {
 			case 0x01:
 				llcpSocket = getOpenLlcpSocket(new AddressPair(remoteAddress, localAddress));
 				if (llcpSocket != null) {
-					log.info("Closing open connection");
+					info("Closing open connection");
 					closeSocket(llcpSocket);
 					llcpSocket.onDisconnect();
 					return new Symmetry();
@@ -323,7 +322,7 @@ public class LlcpConnectionManager implements Llcp {
 			case 0x11: // perm not accept connection at any target point
 				if (pendingConnections.containsKey(localAddress)) {
 					Integer pendingLocalAddress = Integer.valueOf(localAddress);
-					log.info("Closing pending connection");
+					info("Closing pending connection");
 					PendingConnection pendingConnection = pendingConnections.remove(pendingLocalAddress);
 					pendingConnection.getServiceAccessPoint().onConnectFailed();
 				}

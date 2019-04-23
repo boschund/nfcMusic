@@ -17,8 +17,8 @@ package org.nfctools.spi.arygon;
 
 import org.nfctools.com.InputOutputToken;
 import org.nfctools.io.NfcDevice;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ import java.io.OutputStream;
 
 public abstract class AbstractArygonReaderWriter {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 
 	public enum LED {
 		GREEN("06"), RED("02");

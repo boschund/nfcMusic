@@ -26,8 +26,8 @@ import org.nfctools.mf.ndef.MfNdefWriter;
 import org.nfctools.ndef.NdefContext;
 import org.nfctools.ndef.NdefException;
 import org.nfctools.spi.acs.Acr122ReaderWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
@@ -37,25 +37,23 @@ import java.io.IOException;
  */
 public class NdefWriterDemo implements MfCardListener {
 
-	private static Logger log = LoggerFactory.getLogger(NdefWriterDemo.class.getName());
-
 	private NfcDevice nfcReaderWriter = TerminalUtils.getAvailableTerminal();
 	private MfReaderWriter readerWriter = new Acr122ReaderWriter(nfcReaderWriter);
 	private MfNdefWriter ndefWriter = new MfNdefWriter(readerWriter, NdefContext.getNdefMessageEncoder());
 
 	@Override
 	public void cardDetected(MfCard card, MfReaderWriter readerWriter) throws IOException {
-		log.info("Card found. " + card);
+		info("Card found. " + card);
 		long time = System.currentTimeMillis();
 
 		try {
 			ndefWriter.writeNdefMessage(card, NdefExampleRecords.convertToList(NdefExampleRecords.createWifiSetting()));
 		}
 		catch (NdefException e) {
-			log.error(e.getMessage(), e);
+			error(e);
 		}
 
-		log.info("All done in: " + (System.currentTimeMillis() - time) + "ms");
+		info("All done in: " + (System.currentTimeMillis() - time) + "ms");
 		System.exit(0);
 	}
 
@@ -63,7 +61,7 @@ public class NdefWriterDemo implements MfCardListener {
 
 		try {
 			nfcReaderWriter.open();
-			log.info("Listening...");
+			info("Listening...");
 			readerWriter.setCardListener(this);
 			System.in.read();
 			nfcReaderWriter.close();

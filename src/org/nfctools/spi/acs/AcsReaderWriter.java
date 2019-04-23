@@ -24,15 +24,13 @@ import org.nfctools.mf.block.TrailerBlock;
 import org.nfctools.mf.card.MfCard;
 import org.nfctools.mf.classic.Key;
 import org.nfctools.scio.CardTerminalToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.smartcardio.*;
 import java.io.IOException;
+import static ch.bod.nfcMusic.Logger.*;
 
 public abstract class AcsReaderWriter implements MfReaderWriter {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
 	protected BlockResolver blockResolver = new BlockResolver();
 
 	protected CardTerminal cardTerminal;
@@ -169,7 +167,7 @@ public abstract class AcsReaderWriter implements MfReaderWriter {
 	public void setCardListener(MfCardListener cardListener) throws IOException {
 		pollingThread = new Thread(new PollingCardScanner(cardTerminal, cardListener, this));
 		pollingThread.setDaemon(false);
-		log.debug("Starting new thread " + pollingThread.getName());
+		debug("Starting new thread " + pollingThread.getName());
 		pollingThread.start();
 	}
 

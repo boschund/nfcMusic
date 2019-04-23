@@ -25,8 +25,8 @@ import org.nfctools.io.ByteArrayWriter;
 import org.nfctools.spi.arygon.ArygonBaudRateNegotiator;
 import org.nfctools.spi.arygon.ArygonLowLevelWriter;
 import org.nfctools.spi.tama.nfcip.TamaNfcIpCommunicator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
@@ -88,7 +88,7 @@ public class NfcipDemo {
 			NfcTarget nfcTarget = new NfcTarget(nfcipManager);
 			Thread thread = new Thread(nfcTarget);
 			thread.start();
-			log.info("Target running...");
+			info("Target running...");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -100,10 +100,10 @@ public class NfcipDemo {
 		try {
 			NfcipDemo nfcipDemo = new NfcipDemo();
 
-			//			log.info("starting Initiator ...");
+			//			info("starting Initiator ...");
 			//			nfcipDemo.runInitiator();
 			//			Thread.sleep(1000);
-			log.info("starting Target ...");
+			info("starting Target ...");
 			nfcipDemo.runTarget();
 
 			System.in.read();

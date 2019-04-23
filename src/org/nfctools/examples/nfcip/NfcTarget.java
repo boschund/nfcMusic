@@ -18,12 +18,12 @@ package org.nfctools.examples.nfcip;
 
 import org.nfctools.nfcip.NFCIPConnection;
 import org.nfctools.nfcip.NFCIPManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 public class NfcTarget implements Runnable {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private NFCIPManager nfcipManager;
 
 	public NfcTarget(NFCIPManager nfcipManager) {
@@ -36,25 +36,25 @@ public class NfcTarget implements Runnable {
 		try {
 			while (true) {
 
-				log.info("Waiting for connection");
+				info("Waiting for connection");
 				NFCIPConnection nfcipConnection = nfcipManager.connectAsTarget();
 
-				log.info("Connected, waiting for data...");
+				info("Connected, waiting for data...");
 
 				byte[] data = null;
 				int runs = 0;
 				do {
 					log.trace("Start of Run: " + runs);
 					data = nfcipConnection.receive();
-					log.info("Received: " + data.length + " Runs: " + runs);
+					info("Received: " + data.length + " Runs: " + runs);
 					nfcipConnection.send(data);
 					log.trace("End of Run: " + runs);
 					runs++;
 				} while (data != null && data.length > 0);
 
-				log.info("DONE!!!");
+				info("DONE!!!");
 
-				log.info("Closing connection");
+				info("Closing connection");
 				nfcipConnection.close();
 				Thread.sleep(500);
 			}

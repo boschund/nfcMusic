@@ -19,14 +19,14 @@ import org.nfctools.llcp.Llcp;
 import org.nfctools.llcp.LlcpSocket;
 import org.nfctools.ndef.NdefContext;
 import org.nfctools.ndef.Record;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.util.List;
 
 public class SnepClient extends AbstractSnepImpl {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private SnepAgentListener snepAgentListener;
 	private SnepRequestContainer snepRequestContainer = new SnepRequestContainer();
 	private boolean connected = false;
@@ -42,7 +42,7 @@ public class SnepClient extends AbstractSnepImpl {
 	@Override
 	public void onLlcpActive(Llcp llcp) {
 		if (snepAgentListener != null && snepAgentListener.hasDataToSend() && !connected) {
-			log.debug("Connecting to " + SnepConstants.SNEP_SERVICE_NAME);
+			debug("Connecting to " + SnepConstants.SNEP_SERVICE_NAME);
 			llcp.connectToService(SnepConstants.SNEP_SERVICE_NAME, this);
 		}
 	}
@@ -52,14 +52,14 @@ public class SnepClient extends AbstractSnepImpl {
 		if (snepAgentListener.hasDataToSend())
 			handleActiveConnection(llcpSocket);
 		else {
-			log.debug("No data to send, disconnecting...");
+			debug("No data to send, disconnecting...");
 			llcpSocket.disconnect();
 		}
 	}
 
 	@Override
 	public void onConnectSucceeded(LlcpSocket llcpSocket) {
-		log.debug("Connection succeeded");
+		debug("Connection succeeded");
 		connected = true;
 		handleActiveConnection(llcpSocket);
 	}
@@ -76,7 +76,7 @@ public class SnepClient extends AbstractSnepImpl {
 
 	@Override
 	public void onDisconnect() {
-		log.debug("Disconnect succeeded");
+		debug("Disconnect succeeded");
 		connected = false;
 	}
 

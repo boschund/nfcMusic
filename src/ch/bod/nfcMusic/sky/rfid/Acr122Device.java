@@ -21,10 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package ch.sky.web.rfid;
+package ch.bod.nfcMusic.sky.rfid;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static ch.bod.nfcMusic.Logger.*;
 import org.nfctools.mf.MfCardListener;
 import org.nfctools.spi.acs.Acr122ReaderWriter;
 import org.nfctools.spi.acs.AcsTerminal;
@@ -37,8 +36,6 @@ import java.io.IOException;
  * An ACR122 device.
  */
 public class Acr122Device extends AcsTerminal {
-    private static final Logger log = LogManager.getLogger(RfidListener.class.getName());
-
 
     /** The ACR122 reader/writer */
     private Acr122ReaderWriter readerWriter;
@@ -54,7 +51,7 @@ public class Acr122Device extends AcsTerminal {
 
     @Override
     public void open() throws IOException {
-        log.info("Opening device");
+        info("Opening device");
         super.open();
     }
 
@@ -63,13 +60,13 @@ public class Acr122Device extends AcsTerminal {
      * @param listener a listener
      */
     public void listen(MfCardListener listener) throws IOException {
-        log.info("Listening for cards...");
+        info("Listening for cards...");
         readerWriter.setCardListener(listener);
     }
     
     @Override
     public void close() throws IOException {
-        log.info("Closing device");
+        info("Closing device");
         readerWriter.removeCardListener();
         super.close();
     }

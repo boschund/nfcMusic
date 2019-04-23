@@ -21,8 +21,8 @@ import org.nfctools.spi.tama.request.SetDepDataReq;
 import org.nfctools.spi.tama.request.SetMetaDepDataReq;
 import org.nfctools.spi.tama.response.GetDepDataResp;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class TargetNfcIpConnection extends AbstractNfcIpConnection {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private NFCIPCommunicator tamaCommunicator;
 

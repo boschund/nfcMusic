@@ -32,8 +32,8 @@ import org.nfctools.ndef.NdefWriter;
 import org.nfctools.ndef.Record;
 import org.nfctools.tags.TagOutputStream;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
 @Deprecated
 public class MfNdefWriter implements NdefWriter<MfCard> {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private MfReaderWriter readerWriter;
 	private NdefMessageEncoder ndefMessageEncoder;
@@ -117,8 +117,7 @@ public class MfNdefWriter implements NdefWriter<MfCard> {
 		Application application = applicationDirectory.createApplication(MfNdefConstants.NDEF_APP_ID,
 				tlvWrappedNdefData.length, writeKeyValue, trailerBlock);
 
-		if (log.isDebugEnabled())
-			log.debug("Length: " + tlvWrappedNdefData.length + " [" + NfcUtils.convertBinToASCII(tlvWrappedNdefData)
+		debug("Length: " + tlvWrappedNdefData.length + " [" + NfcUtils.convertBinToASCII(tlvWrappedNdefData)
 					+ "]");
 
 		application.write(new KeyValue(Key.B, writeKeyValue), tlvWrappedNdefData);

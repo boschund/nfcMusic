@@ -21,8 +21,8 @@ import org.nfctools.nfcip.NFCIPConnection;
 import org.nfctools.scio.AbstractTerminal;
 import org.nfctools.scio.TerminalMode;
 import org.nfctools.scio.TerminalStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardException;
@@ -31,7 +31,7 @@ import java.io.IOException;
 @SuppressWarnings("restriction")
 public class SclTerminal extends AbstractTerminal {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private Scl3711 scl3711;
 
 	@Override
@@ -65,7 +65,7 @@ public class SclTerminal extends AbstractTerminal {
 				Card card = cardTerminal.connect("direct");
 				scl3711 = new Scl3711(card);
 				notifyStatus(TerminalStatus.WAITING);
-				log.info("Waiting...");
+				info("Waiting...");
 				try {
 					Scl3711NfcipManager nfcipManager = new Scl3711NfcipManager(scl3711);
 					NFCIPConnection nfcipConnection = nfcipManager.connectAsInitiator();
@@ -74,7 +74,7 @@ public class SclTerminal extends AbstractTerminal {
 				catch (Exception e) {
 				}
 				finally {
-					log.info("Disconnect from card");
+					info("Disconnect from card");
 					card.disconnect(true);
 					notifyStatus(TerminalStatus.DISCONNECTED);
 				}
@@ -87,7 +87,7 @@ public class SclTerminal extends AbstractTerminal {
 
 	@Override
 	public void initTargetDep() throws IOException {
-		log.warn("Target mode not supported yet. Using initiator...");
+		warning(new Exception("Target mode not supported yet. Using initiator..."));
 		initInitiatorDep();
 	}
 

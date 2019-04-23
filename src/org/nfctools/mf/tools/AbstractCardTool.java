@@ -24,8 +24,8 @@ import org.nfctools.mf.classic.MemoryLayout;
 import org.nfctools.mf.classic.MfClassicReaderWriter;
 import org.nfctools.mf.mad.MadConstants;
 import org.nfctools.spi.acs.AcrMfClassicReaderWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.Collection;
 
 public abstract class AbstractCardTool implements NfcTagListener {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 
 	protected Collection<byte[]> knownKeys = new ArrayList<byte[]>();
 
@@ -64,7 +64,7 @@ public abstract class AbstractCardTool implements NfcTagListener {
 			doWithReaderWriter(readerWriter);
 		}
 		catch (IOException e) {
-			log.error(e.getLocalizedMessage(), e);
+			error(e);
 		}
 	}
 

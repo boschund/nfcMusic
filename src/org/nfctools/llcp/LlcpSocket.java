@@ -15,14 +15,14 @@
  */
 package org.nfctools.llcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import org.nfctools.llcp.pdu.*;
 
 public class LlcpSocket {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private AddressPair addressPair;
 
@@ -71,7 +71,7 @@ public class LlcpSocket {
 
 	public void onSendConfirmed(int received) {
 		if (sendSequence != received)
-			log.warn("sequences do not match myS: " + sendSequence + " myR: " + receivedSequence + " hisR: " + received);
+			warning(new Exception("sequences do not match myS: " + sendSequence + " myR: " + receivedSequence + " hisR: " + received));
 
 		serviceAccessPoint.onSendSucceeded(this);
 	}
@@ -94,8 +94,8 @@ public class LlcpSocket {
 
 	public void onInformation(int received, int send, byte[] serviceDataUnit) {
 		if (send != receivedSequence)
-			log.warn("sequences do not match myS: " + sendSequence + " myR: " + receivedSequence + " hisS: " + send
-					+ " Msg-Length: " + serviceDataUnit.length);
+			warning(new Exception("sequences do not match myS: " + sendSequence + " myR: " + receivedSequence + " hisS: " + send
+					+ " Msg-Length: " + serviceDataUnit.length));
 
 		byte[] information = serviceAccessPoint.onInformation(serviceDataUnit);
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.sky.web.test;
+package ch.bod.nfcMusic.sky.test;
 
 import org.nfctools.api.ApduTag;
 import org.nfctools.api.NfcTagListener;

@@ -18,8 +18,8 @@ package org.nfctools.spi.acs;
 import org.nfctools.io.ByteArrayReader;
 import org.nfctools.io.ByteArrayWriter;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.*;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import java.io.IOException;
 @Deprecated
 public class ApduReaderWriter implements ByteArrayReader, ByteArrayWriter {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private Card card;
 	private CardChannel cardChannel;
@@ -84,9 +84,7 @@ public class ApduReaderWriter implements ByteArrayReader, ByteArrayWriter {
 			CommandAPDU commandAPDU = new CommandAPDU(0xff, 0, 0, 0, data, offset, length);
 			byte[] commandBytes = commandAPDU.getBytes();
 
-			if (log.isDebugEnabled()) {
-				log.debug("command  APDU => " + NfcUtils.convertBinToASCII(commandBytes));
-			}
+			debug("command  APDU => " + NfcUtils.convertBinToASCII(commandBytes));
 
 			ResponseAPDU responseAPDU = null;
 			if (cardChannel != null) {
@@ -99,8 +97,7 @@ public class ApduReaderWriter implements ByteArrayReader, ByteArrayWriter {
 			}
 
 			responseData = responseAPDU.getData();
-			if (log.isDebugEnabled())
-				log.debug("response APDU <= " + NfcUtils.convertBinToASCII(responseData));
+			debug("response APDU <= " + NfcUtils.convertBinToASCII(responseData));
 
 			if (!ApduUtils.isSuccess(responseAPDU))
 				throw new ApduException("Error sending message [" + NfcUtils.convertBinToASCII(data) + "] (" + offset

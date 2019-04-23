@@ -17,6 +17,7 @@ package org.nfctools.spi.arygon;
 
 import gnu.io.SerialPort;
 import org.nfctools.com.AbstractBaudRateNegotiator;
+import static ch.bod.nfcMusic.Logger.*;
 
 import java.io.IOException;
 import java.util.Map;
@@ -49,10 +50,10 @@ public class ArygonBaudRateNegotiator extends AbstractBaudRateNegotiator {
 
 		findoutCurrentBaudRate();
 
-		log.debug("Setting baud rate between µC and TAMA to " + baudRate);
+		debug("Setting baud rate between µC and TAMA to " + baudRate);
 		sendMessageAndProcessResponse("0at" + arygonCode);
 
-		log.debug("Setting baud rate between host and µC to " + baudRate);
+		debug("Setting baud rate between host and µC to " + baudRate);
 		sendMessageAndProcessResponse("0ah" + arygonCode);
 
 		setSerialPortParams(baudRate);
@@ -67,12 +68,12 @@ public class ArygonBaudRateNegotiator extends AbstractBaudRateNegotiator {
 		if (!resp.startsWith("FF000000"))
 			throw new MicroControllerException(resp);
 
-		log.debug("resp: " + resp);
+		debug("resp: " + resp);
 	}
 
 	@Override
 	protected boolean checkPortBaudRate() throws IOException {
-		log.debug("checking baud rate ...");
+		debug("checking baud rate ...");
 		sendASCIIMessage("0av");
 		String resp = readResponse();
 		if (resp.startsWith("FF0000")) {

@@ -15,7 +15,6 @@
  */
 package org.nfctools.spi.acs;
 
-import ch.sky.web.Util_NfcSession;
 import org.nfctools.mf.MfCardListener;
 import org.nfctools.mf.MfException;
 import org.nfctools.mf.MfReaderWriter;

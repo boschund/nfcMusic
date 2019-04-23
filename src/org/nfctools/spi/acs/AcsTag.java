@@ -22,14 +22,14 @@ import org.nfctools.api.TagType;
 import org.nfctools.scio.Command;
 import org.nfctools.scio.Response;
 import org.nfctools.utils.NfcUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import javax.smartcardio.*;
 
 public class AcsTag extends Tag implements ApduTag {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+
 	private Card card;
 	private CardChannel cardChannel;
 

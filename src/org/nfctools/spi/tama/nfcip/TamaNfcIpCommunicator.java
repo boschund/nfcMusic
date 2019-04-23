@@ -30,14 +30,14 @@ import org.nfctools.spi.tama.request.ReleaseReq;
 import org.nfctools.spi.tama.request.RfCommunicationReq;
 import org.nfctools.spi.tama.response.InitTamaTargetResp;
 import org.nfctools.spi.tama.response.JumpForDepResp;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.bod.nfcMusic.Logger.*;
+
 
 import java.io.IOException;
 
 public class TamaNfcIpCommunicator extends AbstractTamaCommunicator implements NFCIPManager {
 
-	protected Logger log = LoggerFactory.getLogger(getClass());
+
 
 	private byte[] felicaParams = new byte[TamaConstants.FELICA_PARAM_LENGTH];
 	private byte[] mifareParams = new byte[TamaConstants.MIFARE_PARAM_LENGTH];
@@ -178,7 +178,7 @@ public class TamaNfcIpCommunicator extends AbstractTamaCommunicator implements N
 					}
 				}
 
-				log.info("THREAD DONE");
+				info("THREAD DONE");
 			}
 		});
 		waitingThread.start();
