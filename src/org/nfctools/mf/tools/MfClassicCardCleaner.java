@@ -15,6 +15,7 @@
  */
 package org.nfctools.mf.tools;
 
+import ch.bod.nfcMusic.Logger;
 import org.nfctools.mf.MfConstants;
 import org.nfctools.mf.MfLoginException;
 import org.nfctools.mf.block.DataBlock;
@@ -24,6 +25,8 @@ import org.nfctools.mf.classic.*;
 import org.nfctools.utils.NfcUtils;
 
 import java.io.IOException;
+
+import static ch.bod.nfcMusic.Logger.info;
 
 public class MfClassicCardCleaner extends AbstractCardTool {
 

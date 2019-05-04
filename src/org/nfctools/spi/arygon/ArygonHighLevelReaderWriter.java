@@ -36,7 +36,6 @@ public class ArygonHighLevelReaderWriter extends AbstractArygonReaderWriter {
 	}
 
 	public void sendMessage(ArygonMessage message) throws IOException {
-		log.debug(new String(message.getPayload()));
 		out.write(message.getPayload());
 		getMicroControllerResponse();
 	}

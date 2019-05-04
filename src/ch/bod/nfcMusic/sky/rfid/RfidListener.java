@@ -1,5 +1,6 @@
 package ch.bod.nfcMusic.sky.rfid;
 
+import ch.bod.nfcMusic.MusicController;
 import ch.bod.nfcMusic.sky.test.RWLauncher;
 import org.nfctools.NfcAdapter;
 import org.nfctools.api.TagScannerListener;
@@ -32,6 +33,35 @@ public class RfidListener implements TagScannerListener {
     private static final int SXT = 16;
 
     private RWLauncher launcher;
+    private MusicController musicController;
+
+    public RfidListener(MusicController musicController){
+        this.musicController = musicController;
+        MfCardListener listener = new MfCardListener() {
+            @Override
+            public void cardDetected(MfCard mfCard, MfReaderWriter mfReaderWriter) {
+                try {
+                    if(musicController.getMode() == MusicController.MODE.READABLE)
+                        musicController.setRes(readCard(mfReaderWriter, mfCard));
+                    if(musicController.getMode() == MusicController.MODE.WRITABEL)
+                        writeCard(mfReaderWriter, mfCard, musicController.getInput());
+                    if(musicController.getMode() == MusicController.MODE.CLEAN)
+                        cleanCard();
+                    if(musicController.getMode() == MusicController.MODE.DEV)
+                        System.out.println("DEV MODE !");
+                }
+                catch (CardException ce) {
+                    ce.printStackTrace();
+                }
+            }
+        };
+        // Start listening
+        try {
+            listen(listener);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public RfidListener(RWLauncher launcher){
         this.launcher = launcher;

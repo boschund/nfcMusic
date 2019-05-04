@@ -75,8 +75,6 @@ public class TamaReader implements ByteArrayReader {
 		long timeoutCounter = System.currentTimeMillis();
 		long timeoutCounterForDataFrame = System.currentTimeMillis();
 		while (true) {
-			if (log.isTraceEnabled())
-				log.trace("reading... @" + bufPos);
 			int read = reader.read(buffer, bufPos, buffer.length - bufPos);
 			if (read <= 0) {
 				try {
@@ -87,10 +85,6 @@ public class TamaReader implements ByteArrayReader {
 			}
 			if (read >= 0) {
 				bufPos += read;
-				if (log.isTraceEnabled())
-					log.trace("data read: " + read + "  " + NfcUtils.convertBinToASCII(buffer, 0, bufPos) + "/"
-							+ bufPos);
-
 				if (bufPos >= 6) // we need at least 6 bytes to identify a message
 				{
 					for (int x = 0; x < bufPos; x++) {
@@ -99,8 +93,6 @@ public class TamaReader implements ByteArrayReader {
 							if (TamaUtils.isACKFrame(buffer, x)) {
 								byte[] resp = new byte[6];
 								System.arraycopy(buffer, x, resp, 0, resp.length); // Copy data into response array
-								if (log.isDebugEnabled())
-									log.debug("Ack frame:" + NfcUtils.convertBinToASCII(resp));
 								removeFrameFromBuffer(x, resp);
 
 								useAckFrameTimeout = false;
@@ -128,8 +120,6 @@ public class TamaReader implements ByteArrayReader {
 									&& (msgLength + x <= bufPos) && buffer[x + 3] == (byte)-buffer[x + 4]) {
 								byte[] resp = new byte[msgLength];
 								System.arraycopy(buffer, x, resp, 0, msgLength);
-								if (log.isDebugEnabled())
-									log.debug("Data frame:" + NfcUtils.convertBinToASCII(resp));
 								removeFrameFromBuffer(x, resp);
 								return TamaUtils.unpackPayload(resp);
 							}

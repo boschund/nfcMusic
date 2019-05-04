@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static ch.bod.nfcMusic.Logger.info;
+
 public class TerminalHandler {
 
 	private Logger log = Logger.getLogger(TerminalHandler.class.getName());

@@ -53,13 +53,11 @@ public class NfcInitiator implements Runnable {
 
 				for (int runs = 0; runs < RUNS; runs++) {
 
-					log.trace("Start of Run: " + runs);
 					nfcipConnection.send(data);
 					totalSend += data.length;
 					info("Send: " + data.length + " Runs: " + runs);
 					byte[] receive = nfcipConnection.receive();
 					info("Response: " + receive.length);
-					log.trace("End of Run: " + runs);
 				}
 
 				nfcipConnection.send(new byte[0]);

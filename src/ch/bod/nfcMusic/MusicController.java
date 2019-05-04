@@ -2,7 +2,7 @@ package ch.bod.nfcMusic;
 
 import ch.bod.nfcMusic.gui.FileChooser;
 import ch.bod.nfcMusic.gui.MusicGUI;
-import ch.bod.nfcMusic.nfc.NdefUltralightTagScanner;
+import ch.bod.nfcMusic.sky.rfid.RfidListener;
 import ch.bod.nfcMusic.sound.Playlist;
 import ch.bod.nfcMusic.sound.Song;
 import ch.bod.nfcMusic.sound.ThreadedMp3Player;
@@ -19,12 +19,15 @@ public class MusicController implements ActionListener, MouseListener
     public static final String SEARCH = "search";
     public static final String BUTTON_READ = "b_read";
     public static final String BUTTON_WRITE = "b_write";
+    public static final String BUTTON_CLEAN = "b_clean";
 
-    public enum MODE {WRITABEL, READABLE, DEV};
+    public enum MODE {WRITABEL, READABLE, DEV, CLEAN};
 
     private Playlist playlist = new Playlist();
     private Song actualSong;
-    private NdefUltralightTagScanner ndefUltralightTagScanner;
+    //private NdefUltralightTagScanner _tagScanner;
+    private RfidListener _tagScanner;
+
     private volatile static ThreadedMp3Player player;
     private FileChooser fileChooser = new FileChooser();
     private MusicGUI gui;
@@ -37,7 +40,7 @@ public class MusicController implements ActionListener, MouseListener
         try {
             //UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
             //UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
-            UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
             //*LookAndFeel
         }
         catch (Throwable e) {
@@ -50,7 +53,7 @@ public class MusicController implements ActionListener, MouseListener
     {
         gui = new MusicGUI(this, mode);
         //Initialize Cards Scanner
-        ndefUltralightTagScanner = new NdefUltralightTagScanner(this);
+        _tagScanner = new RfidListener(this);
         // intro
         File ref = new File("ref");
         referencePath = ref.getAbsolutePath().substring(0, ref.getAbsolutePath().length()-4);
@@ -91,6 +94,11 @@ public class MusicController implements ActionListener, MouseListener
         {
             gui.setWritable();
             mode = MODE.WRITABEL;
+        }
+        if(e.getActionCommand() == BUTTON_CLEAN)
+        {
+            gui.setClean();
+            mode = MODE.CLEAN;
         }
     }
 
@@ -226,6 +234,32 @@ public class MusicController implements ActionListener, MouseListener
     public void info(String ò_ó)
     {
         System.out.println(".:. õ_õ .:." + ò_ó);
+    }
+
+    /***********************************************************************/
+    /* the following code is only uses in case of Mifarecards
+    */
+
+    public void setRes(String res) {
+        String path = "c:/temp";
+        if (res != null && !res.equalsIgnoreCase(""))
+            path = res.trim();
+        File songFile = new File(path);
+        if (songFile.exists() && songFile.isFile()) {
+            //Here comes a song
+            callNext(new Song(new File(path)));
+        } else if (songFile.exists() && songFile.isDirectory()) {
+            resetPlaylist();
+            File[] listOfFiles = songFile.listFiles();
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile())
+                    if (listOfFiles[i].getName().endsWith("mp3"))
+                        addToPlaylist(new Song(listOfFiles[i]));
+            }
+            callNext();
+        } else {
+            info("Scanned File : " + path + " is not existent !");
+        }
     }
 
 }

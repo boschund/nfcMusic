@@ -71,18 +71,11 @@ public class SerialPortNfcDevice implements NfcDevice {
 
 				port.setInputBufferSize(SERIAL_PORT_BUFFER_SIZE);
 				//				initSerialPortEventListener();
-
-				log.trace(port + " BaudRate: " + port.getBaudRate() + ", InputBuffer: " + port.getInputBufferSize());
-
 				tweakPort();
-
 				inputOutputToken.setInputStream(port.getInputStream());
 				inputOutputToken.setOutputStream(port.getOutputStream());
 
 				speedNegotiator.negotiateBaudRateOnObject(port, baudRate);
-
-				log.trace("Comport opened: " + port + " BaudRate: " + port.getBaudRate() + ", InputBuffer: "
-						+ port.getInputBufferSize());
 			}
 			catch (PortInUseException e) {
 				throw new IOException(e);
@@ -108,10 +101,6 @@ public class SerialPortNfcDevice implements NfcDevice {
 		catch (UnsupportedCommOperationException e) {
 			throw new RuntimeException(e);
 		}
-
-		log.trace("ReceiveThreshold: " + port.getReceiveThreshold() + " ReceiveTimeout: " + port.getReceiveTimeout()
-				+ " enabled: " + port.isReceiveTimeoutEnabled() + " DataBits: " + port.getDataBits() + " StopBits: "
-				+ port.getStopBits() + " Parity: " + port.getParity());
 	}
 
 	public int getBaudRate() {

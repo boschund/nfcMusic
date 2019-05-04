@@ -14,23 +14,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="org.controlsfx:controlsfx:9.0.0" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-simple:1.6.2" level="project" />
+    <orderEntry type="library" name="rxtx-2.1.7" level="project" />
+    <orderEntry type="library" name="javazoom:jlayer:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-api:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-core:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.nfctools:nfctools-ndef:1.0.M8" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: javazoom:jlayer:1.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.googlecode.soundlibs:tritonus-share:0.3.7-2" level="project" />
-    <orderEntry type="library" name="Maven: com.googlecode.soundlibs:mp3spi:1.9.5-1" level="project" />
-    <orderEntry type="library" name="Maven: com.googlecode.soundlibs:jlayer:1.0.1-1" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:3.8.2" level="project" />
-    <orderEntry type="library" name="Maven: com.googlecode.soundlibs:vorbisspi:1.0.3-1" level="project" />
-    <orderEntry type="library" name="Maven: com.googlecode.soundlibs:jorbis:0.0.17-2" level="project" />
-    <orderEntry type="library" name="Maven: org.rxtx:rxtx:2.1.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.8.2" level="project" />
-    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.14" level="project" />
-    <orderEntry type="library" name="org.controlsfx:controlsfx:9.0.0" level="project" />
-    <orderEntry type="library" name="org.slf4j:slf4j-simple:1.6.2" level="project" />
-    <orderEntry type="library" name="rxtx-2.1.7" level="project" />
   </component>
 </module>

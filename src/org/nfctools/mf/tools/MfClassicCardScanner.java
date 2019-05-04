@@ -22,6 +22,8 @@ import org.nfctools.utils.NfcUtils;
 
 import java.io.IOException;
 
+import static ch.bod.nfcMusic.Logger.info;
+
 public class MfClassicCardScanner extends AbstractCardTool {
 
 	@Override

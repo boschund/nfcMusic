@@ -22,10 +22,6 @@ import org.nfctools.api.TagType;
 import org.nfctools.scio.Command;
 import org.nfctools.scio.Response;
 import org.nfctools.spi.acs.Acs;
-import org.nfctools.utils.NfcUtils;
-import static ch.bod.nfcMusic.Logger.*;
-
-
 import javax.smartcardio.Card;
 import javax.smartcardio.CardException;
 import javax.smartcardio.CommandAPDU;
@@ -51,13 +47,9 @@ public class AcsDirectChannelTag extends Tag implements ApduTag {
 			}
 			else
 				throw new NfcException("Only data mode supported");
-			if (log.isDebugEnabled())
-				log.debug("command: " + NfcUtils.convertBinToASCII(commandAPDU.getBytes()));
 			byte[] transmitControlResponse = card.transmitControlCommand(Acs.IOCTL_SMARTCARD_ACR122_ESCAPE_COMMAND,
 					commandAPDU.getBytes());
 			ResponseAPDU responseAPDU = new ResponseAPDU(transmitControlResponse);
-			if (log.isDebugEnabled())
-				log.debug("response: " + NfcUtils.convertBinToASCII(responseAPDU.getBytes()));
 			return new Response(responseAPDU.getSW1(), responseAPDU.getSW2(), responseAPDU.getData());
 		}
 		catch (CardException e) {

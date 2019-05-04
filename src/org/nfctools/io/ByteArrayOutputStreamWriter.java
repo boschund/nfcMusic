@@ -38,8 +38,6 @@ public class ByteArrayOutputStreamWriter implements ByteArrayWriter {
 
 	@Override
 	public void write(byte[] data, int offset, int length) throws IOException {
-		if (log.isDebugEnabled())
-			log.debug(NfcUtils.convertBinToASCII(data, offset, length));
 		outputStream.write(data, offset, length);
 	}
 }

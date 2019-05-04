@@ -41,12 +41,10 @@ public class PollingCardScanner implements Runnable {
 	@Override
 	public void run() {
 
-		log.debug("Polling started");
 		MfCard card = null;
 		while (!Thread.interrupted()) {
 			try {
 				if (nfcReaderWriter.hasData()) {
-					log.debug("Reader has data");
 					try {
 						card = ((ArygonReaderWriter)readerWriter).readCard();
 						cardListener.cardDetected(card, readerWriter);
@@ -54,12 +52,10 @@ public class PollingCardScanner implements Runnable {
 					}
 					catch (IOException e) {
 						try {
-							log.trace("Halting card. " + e.getMessage(), e);
 							readerWriter.reselectCard(card);
 							readerWriter.setCardIntoHalt(card);
 						}
 						catch (Exception e1) {
-							log.trace("Halting failed...");
 							Thread.sleep(1000);
 						}
 					}
@@ -70,13 +66,11 @@ public class PollingCardScanner implements Runnable {
 				}
 			}
 			catch (IOException e) {
-				log.error(e.getMessage(), e);
 				break;
 			}
 			catch (InterruptedException e) {
 				return;
 			}
 		}
-		log.debug("DONE " + Thread.currentThread().getName());
 	}
 }

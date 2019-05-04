@@ -117,7 +117,6 @@ public class ArygonReaderWriter implements MfReaderWriter {
 	@Override
 	public void setCardIntoHalt(MfCard card) throws IOException {
 		String targetId = "00";
-		log.debug("Halting Card " + card.getId() + " / TargetId: " + targetId);
 		nfcReaderWriter.sendMessage(("0h" + targetId).getBytes());
 		ArygonMessage message = nfcReaderWriter.receiveMessage();
 		if (message.hasTamaErrorCode())
@@ -158,7 +157,6 @@ public class ArygonReaderWriter implements MfReaderWriter {
 		scanForCard();
 		pollingThread = new Thread(new PollingCardScanner(nfcReaderWriter, cardListener, this));
 		pollingThread.setDaemon(false);
-		log.debug("Starting new thread " + pollingThread.getName());
 		pollingThread.start();
 	}
 

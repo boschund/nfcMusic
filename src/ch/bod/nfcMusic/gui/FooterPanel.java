@@ -12,6 +12,7 @@ public class FooterPanel extends JPanel
     private JButton search;
     private JRadioButton r_read;
     private JRadioButton r_write;
+    private JRadioButton r_clean;
 
     public FooterPanel create(MusicController controller, MusicController.MODE mode) {
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
@@ -32,14 +33,20 @@ public class FooterPanel extends JPanel
         r_write = new JRadioButton("Schreiben");
         r_write.setActionCommand(MusicController.BUTTON_WRITE);
         r_write.addActionListener(controller);
+        r_clean = new JRadioButton("Löschen");
+        r_clean.setActionCommand(MusicController.BUTTON_CLEAN);
+        r_clean.addActionListener(controller);
 
         ButtonGroup rw = new ButtonGroup();
         rw.add(r_read);
         rw.add(r_write);
+        rw.add(r_clean);
         add(r_read);
         r_read.setVisible(true);
         add(r_write);
         r_write.setVisible(true);
+        add(r_clean);
+        r_clean.setVisible(true);
 
         if (mode == MusicController.MODE.WRITABEL)
         {
@@ -60,6 +67,7 @@ public class FooterPanel extends JPanel
         r_write.setEnabled(false);
         r_read.setEnabled(true);
         search.setEnabled(false);
+        r_clean.setEnabled(false);
     }
 
     public void setWritable()
@@ -67,6 +75,16 @@ public class FooterPanel extends JPanel
         r_write.setEnabled(true);
         r_read.setEnabled(false);
         search.setEnabled(true);
+        r_clean.setEnabled(false);
+    }
+
+    public void setClean()
+    {
+        r_write.setEnabled(false);
+        r_read.setEnabled(false);
+        r_clean.setEnabled(true);
+        search.setEnabled(true);
+        scan.setText("--> CLEANING CARD <--");
     }
 
     public void setSong(String next)
@@ -88,5 +106,10 @@ public class FooterPanel extends JPanel
     public boolean writeing()
     {
         return r_write.isSelected();
+    }
+
+    public boolean cleaning()
+    {
+        return r_clean.isSelected();
     }
 }

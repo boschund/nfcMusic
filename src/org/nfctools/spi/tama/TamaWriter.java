@@ -57,10 +57,6 @@ public class TamaWriter implements ByteArrayWriter {
 		}
 		dataToWrite[5 + data.length] = (byte)-dcs; // Checksum
 		dataToWrite[6 + data.length] = 0x00; // Postamble
-
-		if (log.isDebugEnabled())
-			log.debug("Sending frame:  " + NfcUtils.convertBinToASCII(dataToWrite));
-
 		writer.write(dataToWrite, 0, dataToWrite.length);
 	}
 

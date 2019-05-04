@@ -17,10 +17,6 @@ package org.nfctools.spi.scm;
 
 import org.nfctools.api.Target;
 import org.nfctools.nfcip.NFCIPConnection;
-import org.nfctools.utils.NfcUtils;
-import static ch.bod.nfcMusic.Logger.*;
-
-
 import java.io.IOException;
 
 public class Scl3711Initiator implements NFCIPConnection {
@@ -48,15 +44,11 @@ public class Scl3711Initiator implements NFCIPConnection {
 
 	@Override
 	public byte[] receive() throws IOException {
-		if (buffer.length != 2 && buffer[0] != 0 && log.isTraceEnabled())
-			log.trace("receive => " + NfcUtils.convertBinToASCII(buffer));
 		return buffer;
 	}
 
 	@Override
 	public void send(byte[] data) throws IOException {
-		if (data.length != 2 && data[0] != 0 && log.isTraceEnabled())
-			log.trace("send    => " + NfcUtils.convertBinToASCII(data));
 		buffer = scl3711.transceive(data);
 	}
 

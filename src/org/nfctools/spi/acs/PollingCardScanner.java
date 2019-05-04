@@ -47,7 +47,7 @@ public class PollingCardScanner implements Runnable {
 				}
 			}
 			catch (Exception e) {
-				Util_NfcSession.getWebApp().showError(e);
+				e.printStackTrace();
 			}
 		}
 	}

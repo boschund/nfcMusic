@@ -37,8 +37,6 @@ import java.io.IOException;
 @Deprecated
 public class NfcipDemo {
 
-	private static Logger log = LoggerFactory.getLogger(NfcipDemo.class.getName());
-
 	private SerialPortNfcDevice nfcDevice;
 
 	public NfcipDemo() {

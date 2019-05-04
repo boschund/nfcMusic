@@ -45,10 +45,6 @@ public class TargetNfcIpConnection extends AbstractNfcIpConnection {
 		do {
 			GetDepDataResp getDepDataResp = tamaCommunicator.sendMessage(new GetDepDataReq());
 			out.write(getDepDataResp.getDataIn(), 0, getDepDataResp.getDataIn().length);
-			log.debug("Data received: " + (getDepDataResp.getDataIn().length) + " More Information: "
-					+ getDepDataResp.isMoreInformation());
-			log.debug("Received data: " + NfcUtils.convertBinToASCII(getDepDataResp.getDataIn()));
-
 			if (!getDepDataResp.isMoreInformation()) {
 				//				tamaCommunicator.sendMessage(new SetDepDataReq(new byte[0], 0, 0));
 				break;
@@ -61,7 +57,6 @@ public class TargetNfcIpConnection extends AbstractNfcIpConnection {
 	public void send(byte[] data) throws IOException {
 		ByteArrayInputStream in = new ByteArrayInputStream(data);
 		byte[] sendBuffer = new byte[NFCIP_BUFFER_SIZE];
-		log.debug("Data to send: " + in.available());
 
 		//		GetDepDataResp getDepDataResp = tamaCommunicator.sendMessage(new GetDepDataReq());
 		//		if (getDepDataResp.getDataIn().length != 0)
@@ -77,9 +72,6 @@ public class TargetNfcIpConnection extends AbstractNfcIpConnection {
 				int dataRead = in.read(sendBuffer, 0, sendBuffer.length);
 
 				boolean moreInformationToSend = sendBuffer.length == dataRead && in.available() > 0;
-				log.debug("Sending data... " + dataRead + " more to send: " + moreInformationToSend);
-				log.debug("Send data: " + NfcUtils.convertBinToASCII(sendBuffer, 0, dataRead));
-
 				if (moreInformationToSend)
 					tamaCommunicator.sendMessage(new SetMetaDepDataReq(sendBuffer, 0, dataRead));
 				else {

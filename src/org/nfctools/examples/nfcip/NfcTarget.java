@@ -44,11 +44,9 @@ public class NfcTarget implements Runnable {
 				byte[] data = null;
 				int runs = 0;
 				do {
-					log.trace("Start of Run: " + runs);
 					data = nfcipConnection.receive();
 					info("Received: " + data.length + " Runs: " + runs);
 					nfcipConnection.send(data);
-					log.trace("End of Run: " + runs);
 					runs++;
 				} while (data != null && data.length > 0);
 

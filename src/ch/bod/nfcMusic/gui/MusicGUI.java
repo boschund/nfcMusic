@@ -106,6 +106,11 @@ public class MusicGUI extends JFrame
         footerPanel.setWritable();
     }
 
+    public void setClean()
+    {
+        footerPanel.setClean();
+    }
+
     public void setOutput(String next)
     {
         footerPanel.setSong(next);
