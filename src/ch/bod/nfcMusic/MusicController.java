@@ -1,14 +1,19 @@
 package ch.bod.nfcMusic;
 
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.Panel;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
-import ch.bod.nfcMusic.gui.AbstractMusicGUI;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import ch.bod.nfcMusic.gui.FileChooser;
-import ch.bod.nfcMusic.gui.FullScreenMusicGUI;
 import ch.bod.nfcMusic.gui.MusicGUI;
 import ch.bod.nfcMusic.sky.rfid.RfidListener;
 import ch.bod.nfcMusic.sound.Playlist;
@@ -31,8 +36,9 @@ public class MusicController implements ActionListener, MouseListener
 
     private volatile static ThreadedMp3Player player;
     private FileChooser fileChooser = new FileChooser();
-    private AbstractMusicGUI gui;
-    private String referencePath;
+    private JFrame frame = new JFrame();
+    private MusicGUI gui;
+    private String referencePath = ".";
 
     public static MODE mode = MODE.READABLE;
     public boolean kiosk = true;
@@ -105,15 +111,19 @@ public class MusicController implements ActionListener, MouseListener
 
     public MusicController(MODE mode)
     {
-    	if (kiosk)
-    		gui = new FullScreenMusicGUI(this, mode);
-    	else
-    		gui = new MusicGUI(this, mode);
-        //Initialize Cards Scanner
-        _tagScanner = new RfidListener(this);
-        // intro
-        File ref = new File("ref");
+    	File ref = new File("ref");
         referencePath = ref.getAbsolutePath().substring(0, ref.getAbsolutePath().length()-4);
+        
+    	frame.setTitle("NFCMusic");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getReferencePath() + File.separator + "resources" + File.separator + "metal.png"));
+        if (kiosk)
+    		setKioskGui();
+    	else
+    		setGui();
+
+        //Initialize Cards Scanner
+        //_tagScanner = new RfidListener(this);
+        // intro
         player = new ThreadedMp3Player(this);
         player.start();
         gui.start();
@@ -122,6 +132,74 @@ public class MusicController implements ActionListener, MouseListener
 
     public java.lang.String getReferencePath() {
         return referencePath;
+    }
+    
+    private void setGui()
+    {
+    	frame.setSize(700, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        
+        gui = new MusicGUI(this, mode);
+        gui.setSize(700, 400);
+        
+        frame.getContentPane().add(gui);
+        frame.pack();
+
+        frame.getContentPane().repaint();
+        frame.repaint();
+        
+        frame.getContentPane().setVisible(true);
+        frame.setVisible(true);
+    }
+    
+    private void setKioskGui()
+    {
+    	frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+    	JPanel panel = new JPanel();
+    	panel.setVisible(true);
+    	panel.setEnabled(true);
+    	panel.setLayout(new BorderLayout());
+    	
+        Panel start = new Panel();
+        start.setSize(20, 400);
+        start.setEnabled(true);
+        start.setVisible(true);
+        panel.add(start, BorderLayout.NORTH);
+        start.repaint();
+        
+        Panel left = new Panel();
+        left.setSize(400, 20);
+        left.setEnabled(true);
+        left.setVisible(true);
+        panel.add(left, BorderLayout.WEST);
+        left.repaint();
+        
+        Panel right = new Panel();
+        right.setSize(400, 20);
+        right.setEnabled(true);
+        right.setVisible(true);
+        panel.add(right, BorderLayout.EAST);
+        right.repaint();
+        
+        Panel end = new Panel();
+        end.setSize(20, 400);
+        end.setEnabled(true);
+        end.setVisible(true);
+        panel.add(end, BorderLayout.SOUTH);
+        end.repaint();
+        
+        gui = new MusicGUI(this, mode);
+        gui.setSize(700, 400);
+        gui.setVisible(true);
+        panel.add(gui, BorderLayout.CENTER);
+        
+        frame.getContentPane().add(panel);
+        frame.pack();
+        panel.repaint();
+
+        frame.repaint();
+        frame.setVisible(true);
     }
 
     @Override

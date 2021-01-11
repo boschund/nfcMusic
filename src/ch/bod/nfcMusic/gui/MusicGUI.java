@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MusicGUI extends AbstractMusicGUI
+public class MusicGUI extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private SimpleTable commingSoon;
@@ -31,13 +31,7 @@ public class MusicGUI extends AbstractMusicGUI
 
     public void start() {
         try {
-            // setting the frame. best: 700 x 400, kioskmode: fullscreen
-        	setSize(700, 400);
-            setTitle("NFCMusic");
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setLocationRelativeTo(null);
-            setIconImage(Toolkit.getDefaultToolkit().getImage(controller.getReferencePath() + File.separator + "resources" + File.separator + "metal.png"));
-
+            
             //creating GUI
             createGUI();
 
