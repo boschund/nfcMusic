@@ -1,25 +1,20 @@
 @echo off
 
-HOME=/
-JAVA_HOME=/opt/java
+HOME=.
+JAVA_HOME=/opt/java???
 
-export PATH=$PATH:$JAVA_HOME
-
-set JTATTOO=$HOME/lib/JTattoo-1.6.11.jar
-set JLAYER=$HOME/lib/jlayer-1.0.1.jar
-set NFC_TOOL=$HOME/lib/org.nfctools-api-1.0.M8.jar:$HOME/lib/org.nfctools-core-1.0.M8.jar:$HOME/lib/org.nfctools-ndef-1.0.M8.jar
-set SLF=$HOME/lib/slf4j-api-1.7.25.jar
+export PATH=$JAVA_HOME:$PATH
 
 echo java -version:
 $JAVA_HOME/bin/java -version
 
-set CLASSPATH=$CLASSPATH:$JTATTOO:$JLAYER:$NFC_TOOL:$SLF:$HOME/target/classes
+set CLASSPATH=$HOME:$HOME/lib/controlsfx-9.0.0.jar:$HOME/lib/jlayer-1.0.1.jar$HOME/lib/rxtx-2.1.7.jar:$HOME/lib/slf4j-api-1.5.10.jar:$HOME/lib/slf4j-api-1.7.25.jar:$HOME/target/classes:$CLASSPATH
 
 echo .
-echo CLASSPATH:
+echo CLASSPATH
 echo $CLASSPATH
 echo .
 
-$JAVA_HOME/bin/java.exe ch.bod.nfcMusic.MusicController
+$JAVA_HOME/bin/java.exe ch.bod.nfcMusic.MusicController dev
 
 pause

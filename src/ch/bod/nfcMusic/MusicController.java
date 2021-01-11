@@ -1,18 +1,19 @@
 package ch.bod.nfcMusic;
 
-import ch.bod.nfcMusic.gui.FileChooser;
-import ch.bod.nfcMusic.gui.MusicGUI;
-import ch.bod.nfcMusic.sky.rfid.RfidListener;
-import ch.bod.nfcMusic.sound.Playlist;
-import ch.bod.nfcMusic.sound.Song;
-import ch.bod.nfcMusic.sound.ThreadedMp3Player;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+
+import ch.bod.nfcMusic.gui.AbstractMusicGUI;
+import ch.bod.nfcMusic.gui.FileChooser;
+import ch.bod.nfcMusic.gui.FullScreenMusicGUI;
+import ch.bod.nfcMusic.gui.MusicGUI;
+import ch.bod.nfcMusic.sky.rfid.RfidListener;
+import ch.bod.nfcMusic.sound.Playlist;
+import ch.bod.nfcMusic.sound.Song;
+import ch.bod.nfcMusic.sound.ThreadedMp3Player;
 
 public class MusicController implements ActionListener, MouseListener
 {
@@ -30,28 +31,84 @@ public class MusicController implements ActionListener, MouseListener
 
     private volatile static ThreadedMp3Player player;
     private FileChooser fileChooser = new FileChooser();
-    private MusicGUI gui;
+    private AbstractMusicGUI gui;
     private String referencePath;
 
-    private MODE mode = MODE.DEV;
+    public static MODE mode = MODE.READABLE;
+    public boolean kiosk = true;
 
     public static void main(String[] args)
     {
+    	MODE initial = MODE.DEV;
         try {
+        	init(args);
             //UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
             //UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
             //UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
             //*LookAndFeel
+        	
+        	new MusicController(initial);
         }
         catch (Throwable e) {
             System.out.println(e);
         }
-        new MusicController();
+    }
+    
+    private static MODE init(String[] args)
+    {
+    	MODE initial = MODE.DEV;
+    	if (args == null || args.length == 0 || args[0] == null)
+    	{
+    		helptext();
+    	}
+    	else
+    	{
+    		if (args[0].equalsIgnoreCase("dev"))
+    				initial = MODE.DEV;
+    		else
+    		if (args[0].equalsIgnoreCase("read"))
+				initial = MODE.READABLE;
+    		else
+    		if (args[0].equalsIgnoreCase("write"))
+				initial = MODE.WRITABEL;
+    		else
+			if (args[0].equalsIgnoreCase("clean"))
+    				initial = MODE.CLEAN;
+			else
+			helptext();
+    	}
+    	return initial;
+    }
+    
+    private static void helptext()
+    {
+    	System.out.println(".................................................");
+    	System.out.println("... java ch.bod.nfcMusic.MusicController [arg]...");
+    	System.out.println("...                                           ...");
+    	System.out.println("... arg = dev                                 ...");
+    	System.out.println("...       developermode                       ...");
+    	System.out.println("...                                           ...");
+    	System.out.println("... arg = read                                ...");
+    	System.out.println("...       cardreader-mode                     ...");
+    	System.out.println("...                                           ...");
+    	System.out.println("... arg = write                               ...");
+    	System.out.println("...       cardwriter-mode                     ...");
+    	System.out.println("...                                           ...");
+    	System.out.println("... arg = clean                               ...");
+    	System.out.println("...       cardcleaner-mode                    ...");
+    	System.out.println("...                                           ...");
+    	System.out.println("... anything else prints this helptext        ...");
+    	System.out.println(".................................................");
+
+		System.exit(0);
     }
 
-    public MusicController()
+    public MusicController(MODE mode)
     {
-        gui = new MusicGUI(this, mode);
+    	if (kiosk)
+    		gui = new FullScreenMusicGUI(this, mode);
+    	else
+    		gui = new MusicGUI(this, mode);
         //Initialize Cards Scanner
         _tagScanner = new RfidListener(this);
         // intro
@@ -219,21 +276,21 @@ public class MusicController implements ActionListener, MouseListener
 
     }
 
-    public void error(Throwable ò_ó)
+    public void error(Throwable e_e)
     {
-        System.out.println("............. ò_ó .............." + ò_ó);
-        ò_ó.printStackTrace();
+        System.out.println("............. e_e .............." + e_e);
+        e_e.printStackTrace();
         System.out.println("..............................");
     }
 
-    public void warning(Exception ò_ó)
+    public void warning(Exception e_e)
     {
-        System.out.println("............. ò_ó .............." + ò_ó);
+        System.out.println("............. e_e .............." + e_e);
     }
 
-    public void info(String ò_ó)
+    public void info(String e_e)
     {
-        System.out.println(".:. õ_õ .:." + ò_ó);
+        System.out.println(".:. õ_õ .:." + e_e);
     }
 
     /***********************************************************************/

@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="nfcMusic">
+    <output-path>$PROJECT_DIR$/target/</output-path>
+    <root id="archive" name="nfcMusic.jar">
+      <element id="directory" name="lib">
+        <element id="file-copy" path="$PROJECT_DIR$/lib/jlayer-1.0.1.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/lib/rxtx-2.1.7.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/lib/controlsfx-9.0.0.jar" />
+      </element>
+      <element id="directory" name="resources">
+        <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+      </element>
+      <element id="directory" name="target">
+        <element id="dir-copy" path="$PROJECT_DIR$/target" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/play.bat" />
+      <element id="file-copy" path="$PROJECT_DIR$/play.sh" />
+    </root>
+  </artifact>
+</component>

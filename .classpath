@@ -3,11 +3,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/JTattoo-1.6.11.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javazoom:jlayer:1.0.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/org.nfctools:nfctools-api:1.0.M8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/org.nfctools:nfctools-core:1.0.M8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/org.nfctools:nfctools-ndef:1.0.M8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/org.slf4j:slf4j-api:1.7.25"/>
+	<classpathentry kind="lib" path="lib/controlsfx-9.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jlayer-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/rxtx-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

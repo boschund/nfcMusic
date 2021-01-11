@@ -1,26 +1,26 @@
 package ch.bod.nfcMusic;
 
 public class Logger {
-    public static void error(Throwable ò_ó)
+    public static void error(Throwable e_e)
     {
-        System.out.println("Logger-error: " + ò_ó);
-        ò_ó.printStackTrace();
+        System.out.println("Logger-error: " + e_e);
+        e_e.printStackTrace();
         System.out.println("..............................");
     }
 
-    public static void warning(Exception ò_ó)
+    public static void warning(Exception e_e)
     {
-        System.out.println("Logger-warning: " + ò_ó);
+        System.out.println("Logger-warning: " + e_e);
     }
 
-    public static void info(String ò_ó)
+    public static void info(String e_e)
     {
-        System.out.println("Logger-info: " + ò_ó);
+        System.out.println("Logger-info: " + e_e);
     }
 
-    public static void debug(String ò_ó)
+    public static void debug(String e_e)
     {
-        System.out.println("Logger-Debug: " + ò_ó);
+        System.out.println("Logger-Debug: " + e_e);
     }
 
 

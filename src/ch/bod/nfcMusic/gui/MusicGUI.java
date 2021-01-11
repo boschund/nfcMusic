@@ -11,9 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MusicGUI extends JFrame
+public class MusicGUI extends AbstractMusicGUI
 {
-    private SimpleTable commingSoon;
+	private static final long serialVersionUID = 1L;
+	private SimpleTable commingSoon;
     private ImagePanel playing;
     private PlayPanel playButton;
     private final JProgressBar loader = new JProgressBar();
@@ -30,8 +31,8 @@ public class MusicGUI extends JFrame
 
     public void start() {
         try {
-            // setting the frame
-            setSize(700, 400);
+            // setting the frame. best: 700 x 400, kioskmode: fullscreen
+        	setSize(700, 400);
             setTitle("NFCMusic");
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
@@ -42,7 +43,6 @@ public class MusicGUI extends JFrame
 
         } catch (Exception e){
             controller.error(e);
-            start();
         }
     }
 
@@ -67,8 +67,8 @@ public class MusicGUI extends JFrame
         {
             playing = new ImagePanel(controller);
             add(playing, BorderLayout.CENTER);
-        } catch (IOException ò_ó) {
-            controller.error(ò_ó);
+        } catch (IOException ioe) {
+            controller.error(ioe);
         }
 
         // show the playlist as table
@@ -81,8 +81,8 @@ public class MusicGUI extends JFrame
             playButton = new PlayPanel(controller);
             add(playButton, BorderLayout.EAST);
             pauseButton();
-        } catch (IOException ò_ó) {
-            controller.error(ò_ó);
+        } catch (IOException ioe) {
+            controller.error(ioe);
         }
 
         repaint();
