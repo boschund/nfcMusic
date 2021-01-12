@@ -1,8 +1,10 @@
 package ch.bod.nfcMusic;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Panel;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,6 +59,7 @@ public class MusicController implements ActionListener, MouseListener
         }
         catch (Throwable e) {
             System.out.println(e);
+            e.printStackTrace();
         }
     }
     
@@ -116,6 +119,8 @@ public class MusicController implements ActionListener, MouseListener
         
     	frame.setTitle("NFCMusic");
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getReferencePath() + File.separator + "resources" + File.separator + "metal.png"));
+        gui = new MusicGUI(this, mode);
+        gui.start();
         if (kiosk)
     		setKioskGui();
     	else
@@ -126,7 +131,6 @@ public class MusicController implements ActionListener, MouseListener
         // intro
         player = new ThreadedMp3Player(this);
         player.start();
-        gui.start();
         callNext(new Song(new File(referencePath + File.separator+ "resources" + File.separator + "intro.mp3")));
     }
 
@@ -139,66 +143,89 @@ public class MusicController implements ActionListener, MouseListener
     	frame.setSize(700, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        
-        gui = new MusicGUI(this, mode);
-        gui.setSize(700, 400);
-        
-        frame.getContentPane().add(gui);
-        frame.pack();
-
-        frame.getContentPane().repaint();
-        frame.repaint();
-        
-        frame.getContentPane().setVisible(true);
+        frame.setResizable(false);
+        gui.setSize(700,400);
+        frame.add(gui);
         frame.setVisible(true);
     }
     
     private void setKioskGui()
     {
-    	frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+    	//frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	double wi = screenSize.getSize().getWidth();
+    	double hi = screenSize.getSize().getHeight();
+    	System.out.println("wi : " + wi);
+    	System.out.println("hi : " + hi);
     	JPanel panel = new JPanel();
     	panel.setVisible(true);
     	panel.setEnabled(true);
     	panel.setLayout(new BorderLayout());
     	
-        Panel start = new Panel();
-        start.setSize(20, 400);
+    	JPanel start = new JPanel();
+    	Double upperspace = (hi-400)/2;
+    	System.out.println("upperspace : " + upperspace);
+    	start.setMinimumSize(new Dimension(1,upperspace.intValue()));
+    	start.setPreferredSize(new Dimension(1,upperspace.intValue()));
         start.setEnabled(true);
         start.setVisible(true);
         panel.add(start, BorderLayout.NORTH);
         start.repaint();
         
-        Panel left = new Panel();
-        left.setSize(400, 20);
+        JPanel left = new JPanel();
+        Double leftspace = (wi-700)/2;
+        System.out.println("leftspace : " + leftspace);
+        left.setMinimumSize(new Dimension(leftspace.intValue(), 1));
+        left.setPreferredSize(new Dimension(leftspace.intValue(), 1));
         left.setEnabled(true);
         left.setVisible(true);
         panel.add(left, BorderLayout.WEST);
         left.repaint();
         
-        Panel right = new Panel();
-        right.setSize(400, 20);
+        JPanel right = new JPanel();
+        Double rightspace = (wi-700)/2;
+        System.out.println("leftspace : " + rightspace);
+        right.setMinimumSize(new Dimension(rightspace.intValue(), 1));
+        right.setPreferredSize(new Dimension(rightspace.intValue(), 1));
         right.setEnabled(true);
         right.setVisible(true);
         panel.add(right, BorderLayout.EAST);
         right.repaint();
         
-        Panel end = new Panel();
+        JPanel end = new JPanel();
+        Double lowerspace = (hi-400)/2;
+    	System.out.println("lowespace : " + lowerspace);
+    	end.setMinimumSize(new Dimension(1,lowerspace.intValue()));
+    	end.setPreferredSize(new Dimension(1,lowerspace.intValue()));
+        
         end.setSize(20, 400);
         end.setEnabled(true);
         end.setVisible(true);
         panel.add(end, BorderLayout.SOUTH);
         end.repaint();
         
-        gui = new MusicGUI(this, mode);
         gui.setSize(700, 400);
         gui.setVisible(true);
         panel.add(gui, BorderLayout.CENTER);
         
-        frame.getContentPane().add(panel);
-        frame.pack();
-        panel.repaint();
-
-        frame.repaint();
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+        boolean isFullScreen = device.isFullScreenSupported();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setUndecorated(isFullScreen);
+        frame.setResizable(!isFullScreen);
+        
+        if (isFullScreen) {
+            // Full-screen mode
+            device.setFullScreenWindow(frame);
+            frame.validate();
+        } else {
+            // Windowed mode
+            frame.pack();
+            frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
+        }
+        frame.add(panel);
         frame.setVisible(true);
     }
 
